@@ -7,21 +7,22 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { FormAddBook } from "./FormAddBook";
-import { useState } from "react";
+// import { useState } from "react";
 
 export function AddBookDrawer() {
-    const [drawerIsOpen,setDrawerIsOpen] = useState<boolean>(false)
+    // const [drawerIsOpen,setDrawerIsOpen] = useState<boolean>(false)
   return (
-    <Drawer open={drawerIsOpen}>
-      <DrawerTrigger>
-        <button onClick={()=>setDrawerIsOpen(true)}> Add New Book </button>
+    <Drawer>
+      <DrawerTrigger className="bg-slate-950 text-white px-6 py-2 rounded-full shadow-lg">
+        <button>Add Book</button>
       </DrawerTrigger>
+
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Add New Book</DrawerTitle>
-          <DrawerDescription>
+          <DrawerTitle className="py-3">Add New Book</DrawerTitle>
+          <DrawerDescription className="mb-2">
             {/* This action cannot be undone. */}
-            <FormAddBook setDrawerIsOpen={setDrawerIsOpen}/>
+            <FormAddBook/>
           </DrawerDescription>
         </DrawerHeader>
         {/* <DrawerFooter>

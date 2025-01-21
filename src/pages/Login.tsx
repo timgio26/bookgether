@@ -35,7 +35,7 @@ export function Login() {
   }
 
   return (
-    <div>
+    <div className="px-2">
       <form className="flex flex-col" onSubmit={handleSubmit}>
         <label
           htmlFor="email"
@@ -66,7 +66,7 @@ export function Login() {
           required={true}
         />
         <button
-          className="bg-blue-500 text-white p-2 rounded hover:opacity-75 focus:outline-blue-600"
+          className="bg-slate-950 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950"
           disabled={isLoading}
         >
           <span>{!isLoading ? "Log in" : "Loading"}</span>

@@ -31,8 +31,7 @@ export async function signin({email,password}:UserAuth){
 
 export async function logout():Promise<AuthError | null>{
     const { error } = await supabase.auth.signOut()
-    if(!error) toast({title: "Succesfuly log out",
-      style:{color:"green"}});
+    if(!error) toast({title: "Succesfuly log out"});
     localStorage.clear()
     return error
 }
@@ -63,6 +62,12 @@ export async function getBook() {
       style:{color:"red"}
     });
   return { data, error };
+}
+
+
+export async function delBook(id: string) {
+  const { error } = await supabase.from("db_book").delete().eq("id", id);
+  return error;
 }
 
   

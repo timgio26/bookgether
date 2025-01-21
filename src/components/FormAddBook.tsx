@@ -3,7 +3,7 @@ import { Addbook } from "@/utils/types";
 import { useQueryClient } from "@tanstack/react-query";
 import { ChangeEvent, FormEvent, useState } from "react";
 
-export function FormAddBook({setDrawerIsOpen}:{setDrawerIsOpen:React.Dispatch<React.SetStateAction<boolean>>}) {
+export function FormAddBook() {
   const queryClient = useQueryClient();
   const [bookData, setBookData] = useState<Addbook>({
     title: "",
@@ -23,7 +23,6 @@ export function FormAddBook({setDrawerIsOpen}:{setDrawerIsOpen:React.Dispatch<Re
     if (!error) {
       setBookData({ title: "", author: "", isbn: "" });
       queryClient.invalidateQueries({ queryKey: ["book"] });
-      setDrawerIsOpen(false)
     }
     setIsLoading(false);
   }
@@ -68,7 +67,7 @@ export function FormAddBook({setDrawerIsOpen}:{setDrawerIsOpen:React.Dispatch<Re
         value={bookData.isbn}
         onChange={handleFormUpdate}
       />
-      <button className="bg-blue-500 text-white p-2 rounded hover:opacity-75 focus:outline-blue-600">
+      <button className="bg-slate-950 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950">
         {!isLoading ? "Add Book" : "Loading"}
       </button>
     </form>

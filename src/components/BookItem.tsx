@@ -1,4 +1,6 @@
+import { delBook } from "@/utils/api";
 import { Book } from "@/utils/types";
+import { useQueryClient } from "@tanstack/react-query";
 
 // Function to generate star rating display
 function generateStars(rating: number|null){
@@ -7,8 +9,18 @@ function generateStars(rating: number|null){
   return fullStars;
 };
 
+
+
 // Book Item Component
 export function BookItem({book} :{book:Book}):JSX.Element {
+
+  const queryClient = useQueryClient();
+
+  async function handleDelete(){
+    const error = await delBook(book.id.toString())
+    if(!error) queryClient.invalidateQueries({queryKey:["book"]})
+  }
+
   return (
     <div className="p-4 m-4 bg-white rounded-lg shadow-md">
       <h2 className="text-xl font-bold">{book.title || "No Title"}</h2>
@@ -34,6 +46,16 @@ export function BookItem({book} :{book:Book}):JSX.Element {
           <span className="text-gray-400">No Image Available</span>
         </div>
       )}
+      <div className="grid grid-cols-2 mt-4 gap-4">
+        <div className="justify-center flex">
+          <button className="w-full border-slate-950 border-2 border-solid rounded">edit</button>
+        </div>
+        <div className="justify-center flex">
+          <button className="w-full bg-slate-950 border-2 border-slate-950 border-solid  text-white p-2 rounded hover:opacity-75 focus:outline-slate-950" onClick={handleDelete}>
+            delete
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

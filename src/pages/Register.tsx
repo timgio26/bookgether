@@ -26,7 +26,7 @@ export function Register() {
   }
 
   return (
-    <div>
+    <div className="px-2">
       <form
         className="flex flex-col flex-grow justify-center"
         onSubmit={handleSubmit}
@@ -61,7 +61,7 @@ export function Register() {
         />
         <button
           type="submit"
-          className="bg-blue-500 text-white p-2 rounded hover:opacity-75 focus:outline-blue-600"
+          className="bg-slate-950 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950"
           disabled={isLoading}
         >
           <span>{!isLoading?"Register":"Loading"}</span>
