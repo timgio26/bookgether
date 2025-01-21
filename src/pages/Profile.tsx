@@ -1,14 +1,19 @@
 import { logout } from "@/utils/api";
 import { useNavigate } from "react-router";
+import { useStore } from "@/store";
 
 export function Profile() {
     const navigate = useNavigate()
+    const {logout:logoutz} = useStore()
 
 
     // localStorage.getItem
   async function handleLogout() {
     const error = await logout();
-    if(!error)navigate('/')
+    if (!error) {
+      logoutz();
+      navigate("/");
+    }
   }
   return (
     <div className="flex flex-col text-center gap-3">

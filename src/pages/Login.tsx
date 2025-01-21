@@ -2,9 +2,12 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { UserAuth } from "../utils/types";
 import { signin } from "../utils/api";
 import { useNavigate } from "react-router";
+import { useStore } from "@/store";
 
 
 export function Login() {
+  const {login:loginz} = useStore()
+
   const [loginData, setLoginData] = useState<UserAuth>({
     email: "",
     password: "",
@@ -26,8 +29,9 @@ export function Login() {
     setIsLoading(true);
     const {error}=await signin(loginData);
     setIsLoading(false);
-    if(!error)navigate('/')
-    // navigate()
+    if(!error){
+      loginz()
+      navigate('/')}
   }
 
   return (

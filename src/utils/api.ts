@@ -6,7 +6,6 @@ import { AuthError } from '@supabase/supabase-js'
 
 
 
-
 export async function register({email,password}:UserAuth){
     const { data, error } = await supabase.auth.signUp({email,password})
     if (error)
@@ -25,6 +24,7 @@ export async function signin({email,password}:UserAuth){
           description: error.message
         });
     localStorage.setItem("user",JSON.stringify(data.user))
+
     return { data, error }
 }
 
