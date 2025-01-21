@@ -60,7 +60,6 @@ export function Register() {
           required={true}
         />
         <button
-          role="button"
           type="submit"
           className="bg-blue-500 text-white p-2 rounded hover:opacity-75 focus:outline-blue-600"
           disabled={isLoading}
