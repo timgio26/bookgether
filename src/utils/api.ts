@@ -2,7 +2,7 @@ import {UserAuth,Addbook} from './types'
 import { supabase } from './supabase'
 import { toast } from '@/hooks/use-toast'
 import { AuthError} from '@supabase/supabase-js'
-
+import { getUserZ } from './helperFn'
 
 
 export async function register({email,password}:UserAuth){
@@ -38,8 +38,7 @@ export async function logout():Promise<AuthError | null>{
 }
 
 export async function addbook({title,author,isbn}:Addbook) {
-  let owner_id = localStorage.getItem("user") as string
-  owner_id = JSON.parse(owner_id).id
+  const owner_id = getUserZ()
   const { data, error } = await supabase
     .from("db_book")
     .insert([{ title,author,isbn,owner_id}])
@@ -55,7 +54,8 @@ export async function addbook({title,author,isbn}:Addbook) {
 
 
 export async function getBook() {
-  const { data, error } = await supabase.from("db_book").select("*");
+  const owner_id=getUserZ()
+  const { data, error } = await supabase.from("db_book").select("*").eq('owner_id',owner_id);
   if (error)
     toast({
       title: "Uh oh! Something went wrong.",

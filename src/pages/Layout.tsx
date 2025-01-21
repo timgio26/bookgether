@@ -2,9 +2,9 @@ import { NavLink } from "react-router";
 import { Outlet } from "react-router";
 import { useStore } from '../store'
 export function Layout() {
-  // console.log(JSON.parse(localStorage.getItem("user")?localStorage.getItem("user"):""))
+
   const {user} =useStore()
-  console.log(user)
+
   return (
     <div className="flex flex-col min-h-screen">
       <header className="flex justify-center py-2 bg-slate-100 font-thin">
@@ -21,7 +21,7 @@ export function Layout() {
         {user ? (
           <>
             <NavLink className="px-2" to={"/addbook"}>
-              Add Book
+              My Book
             </NavLink>
             <NavLink className="px-2" to={"/findbook"}>
               Find Book
