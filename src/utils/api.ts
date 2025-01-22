@@ -65,6 +65,18 @@ export async function getBook() {
 }
 
 
+export async function getBookIsbn(isbn:string) {
+  const { data, error } = await supabase.from("db_book").select("*").eq('isbn',isbn);
+  if (error)
+    toast({
+      title: "Uh oh! Something went wrong.",
+      description: error.message,
+      style:{color:"red"}
+    });
+  return { data, error };
+}
+
+
 export async function delBook(id: string) {
   const { error } = await supabase.from("db_book").delete().eq("id", id);
   return error;

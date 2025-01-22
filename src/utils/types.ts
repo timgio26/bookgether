@@ -23,3 +23,13 @@ export type Book = {
   condition?: string | null;
 }
 
+export type Aibook = { 
+  title: string;
+  author: string;
+  numberOfPages:number;
+   isbn: string;
+  };
+export type Airesp = {
+  content: Aibook[];
+  validUserInput: boolean;
+};
