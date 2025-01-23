@@ -1,4 +1,5 @@
 import { BookAvail } from "@/components/BookAvail";
+import { Book } from "@/utils/types";
 import { useLocation } from "react-router";
 
 export function FindBookAvail(){
@@ -6,7 +7,7 @@ export function FindBookAvail(){
     console.log(state)
     return(
         <div className="flex flex-col">
-            <BookAvail/>
+            {state.map((each:Book)=><BookAvail book={each} key={each.id}/>)}
         </div>
     )
 }

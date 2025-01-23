@@ -1,8 +1,7 @@
 import { generateStars } from "@/utils/helperFn";
+import { Book } from "@/utils/types";
 
-const book = {rating:4,rented_num:5,img_url:null}
-
-export function BookAvail(){
+export function BookAvail({book}:{book:Book}){
     return(
         <div className="p-4 m-4 bg-white rounded-lg shadow-md">
         {/* <h2 className="text-xl font-bold">{book.title || "No Title"}</h2> */}
@@ -12,11 +11,10 @@ export function BookAvail(){
         <p className="text-gray-500">
           Rented: {book.rented_num ? book.rented_num : 0} times
         </p>
-        {/* <p className="text-gray-500">
-          Created At: {new Date(book.created_at).toLocaleDateString()}
-        </p> */}
-  
-        {/* Placeholder for missing image */}
+        <p className="text-gray-500">
+          Owner: {typeof book.owner_id === 'object' ? book.owner_id.name : 'Unknown'}
+        </p>
+
         {book.img_url ? (
           <img
             src={book.img_url}

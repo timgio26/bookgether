@@ -9,6 +9,16 @@ export type Addbook={
   isbn:string
 }
 
+export type Profile = {
+  created_at: string;
+  credit: number | null;
+  lat: number | null;
+  lng: number | null;
+  name: string;
+  rating: number | null;
+  review_num: number | null;
+  user_id: string;
+};
 
 export type Book = {
   id: number;
@@ -19,7 +29,7 @@ export type Book = {
   rating: number | null;
   rented_num: number | null;
   created_at: string;
-  owner_id: string;
+  owner_id: string | Profile;
   condition?: string | null;
 }
 
@@ -33,3 +43,4 @@ export type Airesp = {
   content: Aibook[];
   validUserInput: boolean;
 };
+

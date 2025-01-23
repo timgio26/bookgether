@@ -37,8 +37,6 @@ export async function fetchAiResponse(inputText:string){
     console.log(respContentRaw)
     if(respContentRaw){
         const respContent = JSON.parse(respContentRaw) as Airesp
-        console.log(respContent)
-        // if(!respContent.validUserInput)throw new Error("something wrong in parsing respond")
         return {respContent};
     }else{
         throw new Error("something wrong in parsing respond")
