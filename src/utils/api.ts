@@ -13,8 +13,17 @@ export async function register({email,password}:UserAuth){
         description: error.message,
         style:{color:"red"}
       });
+    // console.log(data.user?.id)
+    if(data.user?.id){
+      console.log(localStorage.getItem("sb-dzanjlfmchzdirukrrlt-auth-token"))
+      await supabase.from('db_profile').insert([{ user_id: data.user.id ,name:data.user.email}])
+      // console.log(dataProfile,errorProfile)
+    }
     return { data, error }
 }
+
+
+          
 
 export async function signin({email,password}:UserAuth){
     const { data, error } = await supabase.auth.signInWithPassword({email,password})
@@ -66,7 +75,7 @@ export async function getBook() {
 
 
 export async function getBookIsbn(isbn:string) {
-  const { data, error } = await supabase.from("db_book").select("*").eq('isbn',isbn);
+  const { data, error } = await supabase.from("db_book").select("*,owner_id(*)").eq('isbn',isbn);
   if (error)
     toast({
       title: "Uh oh! Something went wrong.",

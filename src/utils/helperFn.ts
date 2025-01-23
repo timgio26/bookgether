@@ -25,3 +25,9 @@ export function getUserZ(): string | null {
 
   return parseResult.data.id;
 }
+
+export function generateStars(rating: number|null){
+  const star = "⭐";
+  const fullStars = rating?star.repeat(Math.round(rating)):"Not Rated";
+  return fullStars;
+};

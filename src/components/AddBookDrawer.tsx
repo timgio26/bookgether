@@ -14,7 +14,7 @@ export function AddBookDrawer() {
   return (
     <Drawer>
       <DrawerTrigger className="bg-slate-950 text-white px-6 py-2 rounded-full shadow-lg">
-        <button>Add Book</button>
+        Add Book
       </DrawerTrigger>
 
       <DrawerContent>

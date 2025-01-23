@@ -1,13 +1,8 @@
 import { delBook } from "@/utils/api";
 import { Book } from "@/utils/types";
 import { useQueryClient } from "@tanstack/react-query";
+import { generateStars } from "@/utils/helperFn";
 
-// Function to generate star rating display
-function generateStars(rating: number|null){
-  const star = "⭐";
-  const fullStars = rating?star.repeat(Math.round(rating)):"Not Rated";
-  return fullStars;
-};
 
 
 
