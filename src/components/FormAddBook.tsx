@@ -9,6 +9,7 @@ export function FormAddBook() {
     title: "",
     author: "",
     isbn: "",
+    price:""
   });
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -21,7 +22,7 @@ export function FormAddBook() {
     setIsLoading(true);
     const { error } = await addbook(bookData);
     if (!error) {
-      setBookData({ title: "", author: "", isbn: "" });
+      setBookData({ title: "", author: "", isbn: "" ,price:""});
       queryClient.invalidateQueries({ queryKey: ["book"] });
     }
     setIsLoading(false);
@@ -65,6 +66,17 @@ export function FormAddBook() {
         id="isbn"
         className="mb-4 border-b border-gray-300 p-2 focus:outline-none"
         value={bookData.isbn}
+        onChange={handleFormUpdate}
+      />
+            <label htmlFor="price" className="mb-2 text-sm font-medium text-gray-700">
+        Rent Price / Day
+      </label>
+      <input
+        type="number"
+        name="price"
+        id="price"
+        className="mb-4 border-b border-gray-300 p-2 focus:outline-none"
+        value={bookData.price}
         onChange={handleFormUpdate}
       />
       <button className="bg-slate-950 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950">

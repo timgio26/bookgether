@@ -45,11 +45,12 @@ export async function logout():Promise<AuthError | null>{
     return error
 }
 
-export async function addbook({title,author,isbn}:Addbook) {
+export async function addbook({title,author,isbn,price}:Addbook) {
   const owner_id = getUserZ()
+  const rent_price = Number(price)
   const { data, error } = await supabase
     .from("db_book")
-    .insert([{ title,author,isbn,owner_id}])
+    .insert([{ title,author,isbn,owner_id,rent_price}])
     .select();
   if (error) toast({
         title: "Uh oh! Something went wrong.",

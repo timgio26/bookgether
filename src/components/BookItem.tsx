@@ -28,6 +28,9 @@ export function BookItem({book} :{book:Book}):JSX.Element {
       <p className="text-gray-500">
         Created At: {new Date(book.created_at).toLocaleDateString()}
       </p>
+      <p className="font-bold text-gray-700">
+        Rent price : USD {book.rent_price} / day
+      </p>
 
       {/* Placeholder for missing image */}
       {book.img_url ? (

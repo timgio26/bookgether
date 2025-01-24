@@ -1,6 +1,6 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router";
-import { Homepage, Layout,Register,Login,Profile,AddBook,FindBook,FindBookAvail} from './pages';
+import { Homepage, Layout,Register,Login,Profile,AddBook,FindBook,FindBookAvail, OrderPage} from './pages';
 import {
   QueryClient,
   QueryClientProvider,
@@ -24,6 +24,8 @@ function App() {
 
             <Route path="addbook" element={<AddBook />} />
             <Route path="profile" element={<Profile />} />
+
+            <Route path='order' element={<OrderPage/>}/>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
           </Route>

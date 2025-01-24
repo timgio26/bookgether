@@ -6,7 +6,8 @@ export type UserAuth = {
 export type Addbook={
   title:string;
   author:string;
-  isbn:string
+  isbn:string;
+  price:number|string;
 }
 
 export type Profile = {
@@ -31,6 +32,7 @@ export type Book = {
   created_at: string;
   owner_id: string | Profile;
   condition?: string | null;
+  rent_price:number
 }
 
 export type Aibook = { 
