@@ -1,3 +1,20 @@
+import { z } from 'zod';
+
+
+export const ProfileSchema = z.object({
+  created_at: z.string(),
+  credit: z.number().nullable(),
+  lat: z.number().nullable(),
+  lng: z.number().nullable(),
+  name: z.string(),
+  rating:z.number().nullable(),
+  review_num:z.number().nullable(),
+  user_id:z.string()
+});
+
+export type datePicker = { startdate: Date|null; enddate: Date |null}
+
+
 export type UserAuth = {
   email: string;
   password: string;
@@ -10,16 +27,17 @@ export type Addbook={
   price:number|string;
 }
 
-export type Profile = {
-  created_at: string;
-  credit: number | null;
-  lat: number | null;
-  lng: number | null;
-  name: string;
-  rating: number | null;
-  review_num: number | null;
-  user_id: string;
-};
+// export type Profile = {
+//   created_at: string;
+//   credit: number | null;
+//   lat: number | null;
+//   lng: number | null;
+//   name: string;
+//   rating: number | null;
+//   review_num: number | null;
+//   user_id: string;
+// };
+export type Profile = z.infer<typeof ProfileSchema>
 
 export type Book = {
   id: number;

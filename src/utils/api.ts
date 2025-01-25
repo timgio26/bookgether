@@ -1,4 +1,4 @@
-import {UserAuth,Addbook} from './types'
+import {UserAuth,Addbook, Profile, ProfileSchema} from './types'
 import { supabase } from './supabase'
 import { toast } from '@/hooks/use-toast'
 import { AuthError} from '@supabase/supabase-js'
@@ -13,17 +13,13 @@ export async function register({email,password}:UserAuth){
         description: error.message,
         style:{color:"red"}
       });
-    // console.log(data.user?.id)
+
     if(data.user?.id){
-      console.log(localStorage.getItem("sb-dzanjlfmchzdirukrrlt-auth-token"))
       await supabase.from('db_profile').insert([{ user_id: data.user.id ,name:data.user.email}])
-      // console.log(dataProfile,errorProfile)
     }
+
     return { data, error }
 }
-
-
-          
 
 export async function signin({email,password}:UserAuth){
     const { data, error } = await supabase.auth.signInWithPassword({email,password})
@@ -45,6 +41,19 @@ export async function logout():Promise<AuthError | null>{
     return error
 }
 
+export async function getprofile():Promise<Profile>{
+  const local_id = getUserZ()
+  const response = await supabase.from('db_profile').select("*").eq('user_id', local_id)
+
+  const result = ProfileSchema.array().safeParse(response.data)
+
+  if (!result.success) {
+    throw new Error('Parsing failed');
+  }
+
+  return result.data[0]
+}
+
 export async function addbook({title,author,isbn,price}:Addbook) {
   const owner_id = getUserZ()
   const rent_price = Number(price)
@@ -60,8 +69,6 @@ export async function addbook({title,author,isbn,price}:Addbook) {
   return { data, error };
 }
 
-
-
 export async function getBook() {
   const owner_id=getUserZ()
   const { data, error } = await supabase.from("db_book").select("*").eq('owner_id',owner_id);
@@ -74,7 +81,6 @@ export async function getBook() {
   return { data, error };
 }
 
-
 export async function getBookid(id:string) {
   const { data, error } = await supabase.from("db_book").select("*,owner_id(*)").eq('id',id)
   if (error)
@@ -85,7 +91,6 @@ export async function getBookid(id:string) {
     });
   return { data, error };
 }
-
 
 export async function getBookIsbn(isbn:string) {
   const { data, error } = await supabase.from("db_book").select("*,owner_id(*)").eq('isbn',isbn);
@@ -98,10 +103,8 @@ export async function getBookIsbn(isbn:string) {
   return { data, error };
 }
 
-
 export async function delBook(id: string) {
   const { error } = await supabase.from("db_book").delete().eq("id", id);
   return error;
 }
-
   
