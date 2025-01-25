@@ -75,6 +75,18 @@ export async function getBook() {
 }
 
 
+export async function getBookid(id:string) {
+  const { data, error } = await supabase.from("db_book").select("*,owner_id(*)").eq('id',id)
+  if (error)
+    toast({
+      title: "Uh oh! Something went wrong.",
+      description: error.message,
+      style:{color:"red"}
+    });
+  return { data, error };
+}
+
+
 export async function getBookIsbn(isbn:string) {
   const { data, error } = await supabase.from("db_book").select("*,owner_id(*)").eq('isbn',isbn);
   if (error)

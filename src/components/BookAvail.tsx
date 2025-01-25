@@ -6,7 +6,7 @@ export function BookAvail({book}:{book:Book}){
   const navigate = useNavigate();
 
   function handleRent(){
-    navigate('/order',{state:{book:book}}) 
+    navigate(`/order/${book.id}`) 
   }
     return(
         <div className="p-4 m-4 bg-white rounded-lg shadow-md">

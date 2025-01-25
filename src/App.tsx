@@ -25,7 +25,7 @@ function App() {
             <Route path="addbook" element={<AddBook />} />
             <Route path="profile" element={<Profile />} />
 
-            <Route path='order' element={<OrderPage/>}/>
+            <Route path='order/:id' element={<OrderPage/>}/>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
           </Route>
