@@ -1,4 +1,4 @@
-import {getBook,getBookid} from "../utils/api"
+import {getBook,getBookid,getprofile} from "../utils/api"
 import { useQuery } from "@tanstack/react-query";
 
 export function useGetBook(){
@@ -17,6 +17,16 @@ export function useGetBookId(id:string){
         {
             queryFn:() => getBookid(id),
             queryKey:['bookid']
+        }
+    )
+    return {data,error}
+}
+
+export function useGetUserProfile(){
+    const {data,error} = useQuery(
+        {
+            queryFn:()=>getprofile(),
+            queryKey:['userid']
         }
     )
     return {data,error}

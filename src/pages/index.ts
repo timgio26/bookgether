@@ -7,3 +7,5 @@ export {Profile} from './Profile'
 export {FindBook} from './FindBook' 
 export {FindBookAvail} from './FindBookAvail' 
 export {OrderPage} from './OrderPage'
+export {ProfileEdit} from "./ProfileEdit"
+export {ProtectedPage} from "./ProtectedPage"
