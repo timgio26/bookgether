@@ -6,6 +6,7 @@ import { Calendar } from "@/components/ui/calendar"
 import {Popover,PopoverContent,PopoverTrigger} from "@/components/ui/popover"
 import { useEffect, useState } from "react"
 import { datePicker } from "@/utils/types"
+import { toast } from "@/hooks/use-toast"
 
 type DatePickperProp = {
   startOrEnd:'startdate'|'enddate';
@@ -14,9 +15,15 @@ type DatePickperProp = {
 
 export function DatePicker({startOrEnd,setDateObj}:DatePickperProp) {
   const [date, setDate] = useState<Date>()
-  useEffect(()=>{
-    setDateObj((state)=>({...state,[startOrEnd]:date}))
-  },[date,setDateObj,startOrEnd])
+  useEffect(() => {
+    if (date && date < new Date())
+      toast({
+        title: "Please select date later than today.",
+        style: { color: "red" },
+      });
+    if (date && date > new Date())
+      setDateObj((state) => ({ ...state, [startOrEnd]: date }));
+  }, [date, setDateObj, startOrEnd]);
 
 
 

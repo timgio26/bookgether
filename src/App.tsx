@@ -5,12 +5,15 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import { ThemeProvider } from './pages/ThemeProvider';
 
 const queryClient = new QueryClient()
 
 function App() {
 
   return (
+    <ThemeProvider>
+
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
@@ -38,6 +41,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
+    </ThemeProvider>
   );
 }
 
