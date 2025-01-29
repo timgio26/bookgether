@@ -13,7 +13,7 @@ export function Layout() {
       <main>
         <Outlet />
       </main>
-      <footer className="flex justify-between fixed bottom-0 w-full bg-slate-100/0 isolate p-4 shadow-lg backdrop-blur-sm">
+      <footer className="flex justify-between fixed bottom-0 w-full bg-slate-100/80 isolate p-4 shadow-lg backdrop-blur-sm">
         <NavLink className="px-2" to={"/"}>
           Home
         </NavLink>

@@ -28,6 +28,7 @@ export function Login() {
     e.preventDefault();
     setIsLoading(true);
     const {error}=await signin(loginData);
+    console.log(error)
     setIsLoading(false);
     if(!error){
       loginz()

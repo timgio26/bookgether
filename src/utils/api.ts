@@ -43,15 +43,31 @@ export async function logout():Promise<AuthError | null>{
 
 export async function getprofile():Promise<Profile>{
   const local_id = getUserZ()
+  console.log(local_id)
   const response = await supabase.from('db_profile').select("*").eq('user_id', local_id)
-
+  console.log(response)
   const result = ProfileSchema.array().safeParse(response.data)
-
   if (!result.success) {
     throw new Error('Parsing failed');
   }
 
   return result.data[0]
+}
+
+export async function updateProfile(profileData:Profile) {
+  const local_id = getUserZ();
+  const { data, error } = await supabase
+    .from("db_profile")
+    .update(profileData)
+    .eq("user_id", local_id)
+    .select();
+  if (error)
+    toast({
+      title: "Uh oh! Something went wrong.",
+      description: error.message,
+      style: { color: "red" },
+    });
+  return { data, error };
 }
 
 export async function addbook({title,author,isbn,price}:Addbook) {

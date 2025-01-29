@@ -4,7 +4,8 @@ import { Book, datePicker, Profile } from "@/utils/types";
 import { DatePicker } from "@/components/DatePicker";
 import { getprofile } from "@/utils/api";
 import { useEffect, useState } from "react";
-import { Map } from "@/components/Map";
+// import { Map } from "@/components/Map";
+import { MapStatic } from "@/components/MapStatic";
 
 export function OrderPage() {
   const { id = "" } = useParams();
@@ -65,7 +66,7 @@ export function OrderPage() {
 
       <div>
         <h1 className="text-md font-semibold">Delivery Method:</h1>
-        <Map/>
+        <MapStatic coordinate={{lat:123,lng:123}}/>
       </div>
 
       <div>

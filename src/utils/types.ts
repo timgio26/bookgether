@@ -4,13 +4,20 @@ import { z } from 'zod';
 export const ProfileSchema = z.object({
   created_at: z.string(),
   credit: z.number().nullable(),
-  lat: z.number().nullable(),
-  lng: z.number().nullable(),
+  // lat: z.number().nullable(),
+  lat:z.union([z.string().nullable(), z.number().nullable()]),
+  lng:z.union([z.string().nullable(), z.number().nullable()]),
   name: z.string(),
   rating:z.number().nullable(),
   review_num:z.number().nullable(),
-  user_id:z.string()
+  user_id:z.string(),
+  address:z.string().nullable(),
 });
+
+export type Coordinate ={
+  lat:number|string|null;
+  lng:number|string|null;
+}
 
 export type datePicker = { startdate: Date|null; enddate: Date |null}
 
@@ -63,4 +70,9 @@ export type Airesp = {
   content: Aibook[];
   validUserInput: boolean;
 };
+
+export type LatLng = {
+  lat:number;
+  lng:number;
+}
 
