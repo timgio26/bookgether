@@ -54,12 +54,12 @@ export function FindBook() {
         <form className="flex my-4 mx-2" action="" onSubmit={handleSubmit}>
           <input
             type="text"
-            className="flex-1 p-2 mr-2 text-sm border border-gray-300 rounded"
+            className="flex-1 p-2 mr-2 text-sm border border-gray-300 rounded dark:bg-transparent"
             onChange={handleSearchInput}
             value={searchVal}
-            placeholder="Tell me what book you want to read"
+            placeholder="Tell AI what book you want to read"
           />
-          <button type="submit" className="p-1 text-white bg-slate-950 rounded aspect-square w-[45.33px] flex justify-center items-center">
+          <button type="submit" className="p-1 text-white bg-slate-950 dark:bg-slate-800 rounded aspect-square w-[45.33px] flex justify-center items-center">
             <Search />
           </button>
         </form>
@@ -67,7 +67,7 @@ export function FindBook() {
       <div className="pb-24 grid-cols-1 justify-center">
         {loading ? (
           <div className="flex justify-center">
-            <UseAnimations animation={loading2} size={56} />
+            <UseAnimations animation={loading2} size={56}/>
           </div>
         ) : (
           answer &&

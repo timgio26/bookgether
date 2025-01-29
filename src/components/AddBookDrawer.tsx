@@ -13,7 +13,7 @@ export function AddBookDrawer() {
     // const [drawerIsOpen,setDrawerIsOpen] = useState<boolean>(false)
   return (
     <Drawer>
-      <DrawerTrigger className="bg-slate-950 text-white px-6 py-2 rounded-full shadow-lg">
+      <DrawerTrigger className="bg-slate-950 text-white px-6 py-2 rounded-full shadow-lg dark:bg-gray-800">
         Add Book
       </DrawerTrigger>
 

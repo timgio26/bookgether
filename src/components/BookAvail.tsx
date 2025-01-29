@@ -9,7 +9,7 @@ export function BookAvail({book}:{book:Book}){
     navigate(`/order/${book.id}`) 
   }
     return(
-        <div className="p-4 m-4 bg-white rounded-lg shadow-md">
+        <div className="p-4 m-4 bg-white rounded-lg shadow-md dark:bg-slate-800">
         {book.img_url ? (
           <img
             src={book.img_url}
@@ -23,11 +23,11 @@ export function BookAvail({book}:{book:Book}){
         )}
         <div className="mt-4">
 
-        <p className="text-gray-500">Rating: {generateStars(book.rating)}</p>
-        <p className="text-gray-500">
+        <p className="text-gray-500 dark:text-gray-200">Rating: {generateStars(book.rating)}</p>
+        <p className="text-gray-500  dark:text-gray-200">
           Rented: {book.rented_num ? book.rented_num : 0} times
         </p>
-        <p className="text-gray-500">
+        <p className="text-gray-500  dark:text-gray-200">
           Owner: {typeof book.owner_id === 'object' ? book.owner_id.name : 'Unknown'}
         </p>
         </div>
@@ -41,7 +41,7 @@ export function BookAvail({book}:{book:Book}){
             {/* <button className="w-full border-slate-950 border-2 border-solid rounded">Wishlist</button> */}
           </div>
           <div className="justify-center flex">
-            <button className="w-full bg-slate-950 border-2 border-slate-950 border-solid  text-white p-2 rounded hover:opacity-75 focus:outline-slate-950" onClick={handleRent}>
+            <button className="w-full bg-slate-950 dark:bg-black border-2 border-slate-950 border-solid  text-white p-2 rounded hover:opacity-75 focus:outline-slate-950" onClick={handleRent}>
               Rent
             </button>
           </div>

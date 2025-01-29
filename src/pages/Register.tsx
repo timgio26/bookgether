@@ -33,12 +33,12 @@ export function Register() {
       >
         <label
           htmlFor="email"
-          className="mb-2 text-sm font-medium text-gray-700"
+          className="mb-2 text-sm font-medium text-gray-700 dark:text-white"
         >
           Email
         </label>
         <input
-          className="mb-4 border-b border-gray-300 p-2 focus:outline-none"
+          className="mb-4 border-b border-gray-300 p-2 focus:outline-none dark:bg-transparent"
           type="email"
           name="email"
           id="email"
@@ -47,12 +47,12 @@ export function Register() {
         />
         <label
           htmlFor="password"
-          className="mb-2 text-sm font-medium text-gray-700"
+          className="mb-2 text-sm font-medium text-gray-700 dark:text-white"
         >
           Password
         </label>
         <input
-          className="mb-4 border-b border-gray-300 p-2 rounded focus:outline-none"
+          className="mb-4 border-b border-gray-300 p-2 rounded focus:outline-none dark:bg-transparent"
           type="password"
           name="password"
           id="password"
@@ -61,7 +61,7 @@ export function Register() {
         />
         <button
           type="submit"
-          className="bg-slate-950 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950"
+          className="bg-slate-950 dark:bg-gray-800 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950"
           disabled={isLoading}
         >
           <span>{!isLoading?"Register":"Loading"}</span>

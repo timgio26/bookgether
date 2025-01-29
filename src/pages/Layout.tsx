@@ -1,19 +1,28 @@
 import { NavLink } from "react-router";
 import { Outlet } from "react-router";
 import { useStore } from '../store'
+import { ModeToggle } from "@/components/ModeToggle";
 export function Layout() {
 
   const {user} =useStore()
 
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="flex justify-center pb-2 pt-4 bg-slate-100 font-thin">
-        BookGether
+      <header className="flex justify-center pb-2 pt-4 bg-slate-100 font-thin dark:bg-gray-900">
+        <div className="flex flex-row justify-between w-full px-5 items-center">
+          {/* <div></div> */}
+          <span>BookGether</span>
+          <div className="justify-end flex">
+
+        <ModeToggle/>
+          </div>
+        </div>
+        
       </header>
       <main>
         <Outlet />
       </main>
-      <footer className="flex justify-between fixed bottom-0 w-full bg-slate-100/80 isolate p-4 shadow-lg backdrop-blur-sm">
+      <footer className="flex justify-between fixed bottom-0 w-full bg-slate-100/80 dark:bg-gray-900 isolate p-4 shadow-lg backdrop-blur-sm">
         <NavLink className="px-2" to={"/"}>
           Home
         </NavLink>

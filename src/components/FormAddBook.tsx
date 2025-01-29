@@ -30,21 +30,21 @@ export function FormAddBook() {
 
   return (
     <form onSubmit={handleFormSubmit} className="flex flex-col">
-      <label htmlFor="title" className="mb-2 text-sm font-medium text-gray-700">
+      <label htmlFor="title" className="mb-2 text-sm font-medium text-gray-700 dark:text-slate-100">
         Book Title
       </label>
       <input
         type="text"
         name="title"
         id="title"
-        className="mb-4 border-b border-gray-300 p-2 focus:outline-none"
+        className="mb-4 border-b border-gray-300 p-2 focus:outline-none dark:bg-transparent"
         value={bookData.title}
         onChange={handleFormUpdate}
         required
       />
       <label
         htmlFor="author"
-        className="mb-2 text-sm font-medium text-gray-700"
+        className="mb-2 text-sm font-medium text-gray-700 dark:text-slate-100"
       >
         Author
       </label>
@@ -52,34 +52,34 @@ export function FormAddBook() {
         type="text"
         name="author"
         id="author"
-        className="mb-4 border-b border-gray-300 p-2 focus:outline-none"
+        className="mb-4 border-b border-gray-300 p-2 focus:outline-none dark:bg-transparent"
         value={bookData.author}
         onChange={handleFormUpdate}
         required
       />
-      <label htmlFor="isbn" className="mb-2 text-sm font-medium text-gray-700">
+      <label htmlFor="isbn" className="mb-2 text-sm font-medium text-gray-700 dark:text-slate-100">
         ISBN
       </label>
       <input
         type="text"
         name="isbn"
         id="isbn"
-        className="mb-4 border-b border-gray-300 p-2 focus:outline-none"
+        className="mb-4 border-b border-gray-300 p-2 focus:outline-none dark:bg-transparent"
         value={bookData.isbn}
         onChange={handleFormUpdate}
       />
-            <label htmlFor="price" className="mb-2 text-sm font-medium text-gray-700">
+            <label htmlFor="price" className="mb-2 text-sm font-medium text-gray-700 dark:text-slate-100">
         Rent Price / Day
       </label>
       <input
         type="number"
         name="price"
         id="price"
-        className="mb-4 border-b border-gray-300 p-2 focus:outline-none"
+        className="mb-4 border-b border-gray-300 p-2 focus:outline-none dark:bg-transparent"
         value={bookData.price}
         onChange={handleFormUpdate}
       />
-      <button className="bg-slate-950 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950">
+      <button className="bg-slate-950 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950 dark:bg-slate-800">
         {!isLoading ? "Add Book" : "Loading"}
       </button>
     </form>

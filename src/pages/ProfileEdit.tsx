@@ -48,7 +48,7 @@ export function ProfileEdit() {
           <div className="w-48 h-48 bg-slate-200 rounded-full"></div>
         </div>
         <div className="flex flex-col space-y-2">
-          <label htmlFor="name" className="text-gray-700">
+          <label htmlFor="name" className="text-gray-700 dark:text-gray-300">
             Name
           </label>
           <input
@@ -56,23 +56,23 @@ export function ProfileEdit() {
             id="name"
             value={formdata?.name}
             onChange={handleName}
-            className="border border-gray-300 rounded p-2 focus:ring-2 focus:ring-slate-950 focus:outline-none"
+            className="border border-gray-300 rounded p-2 focus:ring-2 focus:ring-slate-950 focus:outline-none dark:bg-transparent"
           />
         </div>
         <div className="flex flex-col space-y-2">
-          <label htmlFor="address" className="text-gray-700">
+          <label htmlFor="address" className="text-gray-700  dark:text-gray-300">
             Address
           </label>
           <textarea
             name="address"
             id="address"
             onChange={handleAddress}
-            className="border border-gray-300 rounded p-2 focus:ring-2 focus:ring-slate-950 focus:outline-none"
+            className="border border-gray-300 rounded p-2 focus:ring-2 focus:ring-slate-950 focus:outline-none dark:bg-transparent"
             value={formdata?.address?? ""}
           />
         </div>
         <Map handleMap={handleMap} coordinate={{lat:formdata?.lat??null,lng:formdata?.lng??null}}/>
-        <button className="bg-slate-950 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950 w-full">
+        <button className="bg-slate-950 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950 w-full dark:bg-slate-800">
           Update
         </button>
       </form>

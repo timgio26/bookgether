@@ -40,7 +40,7 @@ export function Login() {
       <form className="flex flex-col" onSubmit={handleSubmit}>
         <label
           htmlFor="email"
-          className="mb-2 text-sm font-medium text-gray-700"
+          className="mb-2 text-sm font-medium text-gray-700 dark:text-white"
         >
           Email
         </label>
@@ -49,12 +49,12 @@ export function Login() {
           name="email"
           id="email"
           onChange={handleEmail}
-          className="mb-4 border-b border-gray-300 p-2 focus:outline-none"
+          className="mb-4 border-b border-gray-300 p-2 focus:outline-none dark:bg-transparent"
           required={true}
         />
         <label
           htmlFor="password"
-          className="mb-2 text-sm font-medium text-gray-700"
+          className="mb-2 text-sm font-medium text-gray-700 dark:text-white"
         >
           Password
         </label>
@@ -63,11 +63,11 @@ export function Login() {
           name="password"
           id="password"
           onChange={handlePassword}
-          className="mb-4 border-b border-gray-300 p-2 focus:outline-none"
+          className="mb-4 border-b border-gray-300 p-2 focus:outline-none dark:bg-transparent"
           required={true}
         />
         <button
-          className="bg-slate-950 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950"
+          className="bg-slate-950 dark:bg-gray-800 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950"
           disabled={isLoading}
         >
           <span>{!isLoading ? "Log in" : "Loading"}</span>

@@ -35,10 +35,10 @@ export function Profile() {
       <h1>{data?.name}</h1>
       <h1>Member since : {data?.created_at.slice(0,4)}</h1>
       <div className="grid grid-cols-2 gap-4 px-5">
-        <div onClick={handleEdit} className="bg-slate-950 border-slate-950 border-solid border-2 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950">
+        <div onClick={handleEdit} className="bg-slate-950 border-slate-950 border-solid border-2 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950 dark:bg-gray-900">
           <span>Edit</span>
         </div>
-        <div onClick={handleLogout} className="border-slate-950 border-2 border-solid p-2 rounded hover:opacity-75 focus:outline-slate-950">
+        <div onClick={handleLogout} className="border-slate-950 border-2 border-solid p-2 rounded hover:opacity-75 focus:outline-slate-950 dark:border-gray-900">
           <span>Log Out</span>
         </div>
       </div>

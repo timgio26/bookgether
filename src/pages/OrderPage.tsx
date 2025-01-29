@@ -48,8 +48,8 @@ export function OrderPage() {
     <div className="flex flex-col gap-4 px-5 pb-16">
       <div>
         <h1 className="text-xl font-bold">{bookdata.title}</h1>
-        <h1 className="text-md text-gray-500">{bookdata.author}</h1>
-        <h1 className="text-md text-gray-500">
+        <h1 className="text-md text-gray-500 dark:text-gray-300">{bookdata.author}</h1>
+        <h1 className="text-md text-gray-500  dark:text-gray-300">
           from:{" "}
           {typeof bookdata.owner_id === "object" && bookdata.owner_id.name}
         </h1>
@@ -75,8 +75,8 @@ export function OrderPage() {
         <div className=" grid grid-cols-2 gap-4 mt-3 mb-5">
           <div
             onClick={() => setShipping("Regular")}
-            className={`flex flex-col justify-center items-center h-20 bg-slate-100 rounded-sm ${
-              shipping == "Regular" && "border-slate-950 border-2"
+            className={`flex flex-col justify-center items-center h-20 bg-slate-100 dark:bg-gray-900 rounded-sm ${
+              shipping == "Regular" && "border-slate-950 border-2 dark:border-slate-300"
             } `}
           >
             <FaTruck />
@@ -84,8 +84,8 @@ export function OrderPage() {
           </div>
           <div
             onClick={() => setShipping("Express")}
-            className={`flex flex-col justify-center items-center h-20 bg-slate-100 rounded-sm ${
-              shipping == "Express" && "border-slate-950 border-2"
+            className={`flex flex-col justify-center items-center h-20 bg-slate-100 dark:bg-gray-900 rounded-sm ${
+              shipping == "Express" && "border-slate-950 border-2 dark:border-slate-300"
             } `}
           >
             <FaTruckFast />
@@ -102,7 +102,7 @@ export function OrderPage() {
           />
         ) : (
           <div className=" flex justify-center mt-2">
-          <div className="bg-slate-950 flex flex-row justify-center items-center rounded-full px-5 py-1">
+          <div className="bg-slate-950 flex flex-row justify-center items-center rounded-full px-5 py-1 dark:bg-gray-800">
           
             <IoMdPin color="white" />
             <span className="text-white">add pin poin</span>
@@ -125,7 +125,7 @@ export function OrderPage() {
       </div>
 
       <button
-        className={`bg-slate-950 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950 ${
+        className={`bg-slate-950 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950 dark:bg-slate-900 ${
           (differenceInDays || 0) <= 0 && "cursor-not-allowed opacity-50"
         }`}
         disabled={(differenceInDays || 0) <= 0}
