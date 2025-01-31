@@ -76,3 +76,10 @@ export type LatLng = {
   lng:number;
 }
 
+export type CreateOrder = {
+  book_id:string|number;
+  renter_id:string;
+  start_date:string;
+  end_date:string;
+  total_cost:number;
+}

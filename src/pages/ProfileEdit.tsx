@@ -31,7 +31,7 @@ export function ProfileEdit() {
     e.preventDefault()
     if(!formdata) return
     const {error} = await updateProfile(formdata)
-    if(!error) navigate("/profile")
+    if(!error) navigate(-1)
   }
 
   if (error)

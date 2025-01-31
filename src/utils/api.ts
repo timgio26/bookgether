@@ -1,4 +1,4 @@
-import {UserAuth,Addbook, Profile, ProfileSchema} from './types'
+import {UserAuth,Addbook, Profile, ProfileSchema, CreateOrder} from './types'
 import { supabase } from './supabase'
 import { toast } from '@/hooks/use-toast'
 import { AuthError} from '@supabase/supabase-js'
@@ -122,5 +122,21 @@ export async function getBookIsbn(isbn:string) {
 export async function delBook(id: string) {
   const { error } = await supabase.from("db_book").delete().eq("id", id);
   return error;
+}
+
+export async function createOrder(orderdata:CreateOrder) {
+  const { data, error } = await supabase
+    .from("db_book_order")
+    .insert([orderdata])
+    .select();
+
+  if (error)
+    toast({
+      title: "Uh oh! Something went wrong.",
+      description: error.message,
+      style: { color: "red" },
+    });
+
+  return { data, error };
 }
   

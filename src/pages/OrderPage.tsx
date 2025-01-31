@@ -1,15 +1,15 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useGetBookId } from "@/features/useBook";
-import { Book, datePicker, Profile } from "@/utils/types";
+import { Book, CreateOrder, datePicker, Profile } from "@/utils/types";
 import { DatePicker } from "@/components/DatePicker";
-import { getprofile } from "@/utils/api";
+import { createOrder, getprofile } from "@/utils/api";
 import { useEffect, useState } from "react";
-// import { Map } from "@/components/Map";
 import { FaTruckFast, FaTruck } from "react-icons/fa6";
 import { MapStatic } from "@/components/MapStatic";
 import { IoMdPin } from "react-icons/io";
 
 export function OrderPage() {
+  const navigate = useNavigate()
   const { id = "" } = useParams();
   const { data: respdata } = useGetBookId(id);
   const { data, error } = respdata || {};
@@ -20,6 +20,8 @@ export function OrderPage() {
   });
   const [differenceInDays, setDifferenceInDays] = useState<number | null>(null);
   const [shipping, setShipping] = useState<"Regular" | "Express">();
+
+
 
   useEffect(() => {
     if (dateObj.startdate && dateObj.enddate) {
@@ -43,6 +45,27 @@ export function OrderPage() {
   }
 
   const bookdata = data[0] as Book;
+
+  function handlePin(){
+    navigate('/profile/edit')
+  }
+
+  async function handleCreateOrder(){
+    if(!user || !dateObj.startdate || !dateObj.enddate) return
+
+    const orderData : CreateOrder = {
+      book_id:id,
+      renter_id:user.user_id,
+      start_date:dateObj.startdate?.toDateString(),
+      end_date:dateObj.enddate?.toDateString(),
+      total_cost:differenceInDays || 0 * bookdata.rent_price
+    }
+    const {data,error} = await createOrder(orderData)
+    console.log(data)
+    console.log(error)
+    if(!error) navigate("/order/confirm/")
+    }
+
 
   return (
     <div className="flex flex-col gap-4 px-5 pb-16">
@@ -102,7 +125,7 @@ export function OrderPage() {
           />
         ) : (
           <div className=" flex justify-center mt-2">
-          <div className="bg-slate-950 flex flex-row justify-center items-center rounded-full px-5 py-1 dark:bg-gray-800">
+          <div className="bg-slate-950 flex flex-row justify-center items-center rounded-full px-5 py-1 dark:bg-gray-800" onClick={handlePin}>
           
             <IoMdPin color="white" />
             <span className="text-white">add pin poin</span>
@@ -129,6 +152,7 @@ export function OrderPage() {
           (differenceInDays || 0) <= 0 && "cursor-not-allowed opacity-50"
         }`}
         disabled={(differenceInDays || 0) <= 0}
+        onClick={handleCreateOrder}
       >
         Confirm
       </button>
