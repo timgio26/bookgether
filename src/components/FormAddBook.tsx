@@ -75,6 +75,7 @@ export function FormAddBook() {
         type="number"
         name="price"
         id="price"
+        step={"any"}
         className="mb-4 border-b border-gray-300 p-2 focus:outline-none dark:bg-transparent"
         value={bookData.price}
         onChange={handleFormUpdate}

@@ -34,7 +34,7 @@ export async function fetchAiResponse(inputText:string){
     })
     
     const respContentRaw=response.choices[0].message.content
-    console.log(respContentRaw)
+    // console.log(respContentRaw)
     if(respContentRaw){
         const respContent = JSON.parse(respContentRaw) as Airesp
         return {respContent};

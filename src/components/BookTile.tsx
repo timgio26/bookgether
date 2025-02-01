@@ -7,7 +7,7 @@ export function BookTile({ title, author, numberOfPages, isbn }: Aibook) {
   const navigate = useNavigate();
 
   async function handleClick() {
-    const { data } = await getBookIsbn(isbn);
+    const { data } = await getBookIsbn(isbn,title);
     if (data?.length) {
       navigate("available", { state: data });
     } else

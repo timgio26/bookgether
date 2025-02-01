@@ -18,7 +18,7 @@ export function OrderPage() {
     startdate: null,
     enddate: null,
   });
-  const [differenceInDays, setDifferenceInDays] = useState<number | null>(null);
+  const [differenceInDays, setDifferenceInDays] = useState<number>(0);
   const [shipping, setShipping] = useState<"Regular" | "Express">();
 
 
@@ -49,7 +49,7 @@ export function OrderPage() {
   function handlePin(){
     navigate('/profile/edit')
   }
-
+  
   async function handleCreateOrder(){
     if(!user || !dateObj.startdate || !dateObj.enddate) return
 
@@ -60,9 +60,9 @@ export function OrderPage() {
       end_date:dateObj.enddate?.toDateString(),
       total_cost:differenceInDays || 0 * bookdata.rent_price
     }
-    const {data,error} = await createOrder(orderData)
-    console.log(data)
-    console.log(error)
+    const {error} = await createOrder(orderData)
+    // console.log(data)
+    // console.log(error)
     if(!error) navigate("/order/confirm/")
     }
 
@@ -142,7 +142,7 @@ export function OrderPage() {
             {bookdata.rent_price} USD/Day
           </h1>
           <h1 className="font-semibold">
-            {differenceInDays || 0 * bookdata.rent_price} USD
+            {differenceInDays * bookdata.rent_price} USD
           </h1>
         </div>
       </div>

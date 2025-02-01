@@ -3,9 +3,11 @@ import { useNavigate } from "react-router";
 import { useStore } from "@/store";
 import { useGetUserProfile } from "@/features/useBook";
 import { ProfileMenu } from "@/components/ProfileMenu";
+import { useQueryClient } from '@tanstack/react-query'
 
 
 export function Profile() {
+  const queryClient = useQueryClient()
   const navigate = useNavigate();
   const { logout: logoutz } = useStore();
 
@@ -15,6 +17,7 @@ export function Profile() {
   async function handleLogout() {
     const error = await logout();
     if (!error) {
+      queryClient.invalidateQueries()
       logoutz();
       navigate("/");
     }
