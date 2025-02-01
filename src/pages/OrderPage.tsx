@@ -70,7 +70,7 @@ export function OrderPage() {
   return (
     <div className="flex flex-col gap-4 px-5 pb-16">
       <div>
-        <h1 className="text-xl font-bold">{bookdata.title}</h1>
+        <h1 className="text-xl font-bold my-2">{bookdata.title}</h1>
         <h1 className="text-md text-gray-500 dark:text-gray-300">{bookdata.author}</h1>
         <h1 className="text-md text-gray-500  dark:text-gray-300">
           from:{" "}

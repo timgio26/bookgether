@@ -1,6 +1,6 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router";
-import { Homepage, Layout,Register,Login,Profile,AddBook,FindBook,FindBookAvail, OrderPage,ProfileEdit, ProtectedPage,Confirm,MyOrderLend,MyOrderRent} from './pages';
+import { Homepage, Layout,Register,Login,Profile,AddBook,FindBook,FindBookAvail, OrderPage,ProfileEdit, ProtectedPage,Confirm,MyOrderLend,MyOrderRent, MyOrderLayout} from './pages';
 import {
   QueryClient,
   QueryClientProvider,
@@ -33,9 +33,9 @@ function App() {
               <Route path="edit" element={<ProtectedPage><ProfileEdit /></ProtectedPage>} />
             </Route>
 
-            <Route path='my-order'>
-              <Route path='rent' element={<ProtectedPage><MyOrderRent /></ProtectedPage>} />
-              <Route path="edit" element={<ProtectedPage><MyOrderLend /></ProtectedPage>} />
+            <Route path='my-order' element={<ProtectedPage><MyOrderLayout/></ProtectedPage>}>
+              <Route path='rent' element={<MyOrderRent />} />
+              <Route path="lend" element={<MyOrderLend />} />
             </Route>
 
             <Route path="order/:id" element={<ProtectedPage><OrderPage /></ProtectedPage>} />

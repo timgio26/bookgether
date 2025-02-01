@@ -17,4 +17,5 @@ export {ProfileEdit} from "./ProfileEdit"
 
 export {MyOrderRent} from './MyOrderRent'
 export {MyOrderLend} from './MyOrderLend'
+export {MyOrderLayout} from './MyOrderLayout'
 

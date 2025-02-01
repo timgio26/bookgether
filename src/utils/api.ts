@@ -1,4 +1,4 @@
-import {UserAuth,Addbook, Profile, ProfileSchema, CreateOrder} from './types'
+import {UserAuth,Addbook, Profile, ProfileSchema, CreateOrder, rentOrderArraySchema} from './types'
 import { supabase } from './supabase'
 import { toast } from '@/hooks/use-toast'
 import { AuthError} from '@supabase/supabase-js'
@@ -138,5 +138,32 @@ export async function createOrder(orderdata:CreateOrder) {
     });
 
   return { data, error };
+}
+
+export async function getMyRentOrder(){
+  const { data, error } = await supabase
+    .from("db_book_order")
+    .select("*,book_id(*,owner_id(name))")
+    .eq("renter_id", getUserZ());
+
+  if (error)
+    toast({
+      title: "Uh oh! Something went wrong.",
+      description: error.message,
+      style: { color: "red" },
+    });
+
+    const result = rentOrderArraySchema.safeParse(data);
+
+    if (!result.success) {
+      toast({
+        title: "Data Validation Error",
+        description: "The fetched data does not match the expected format.",
+        style: { color: "red" },
+      });
+      return { data: null, error: new Error("Data validation error") };
+    }
+
+  return { data:result.data, error };
 }
   

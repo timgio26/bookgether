@@ -17,18 +17,18 @@ export function BookItem({book} :{book:Book}):JSX.Element {
   }
 
   return (
-    <div className="p-4 m-4 bg-white rounded-lg shadow-md">
+    <div className="p-4 m-4 bg-white dark:bg-slate-900 rounded-lg shadow-md">
       <h2 className="text-xl font-bold">{book.title || "No Title"}</h2>
-      <p className="text-gray-700">Author: {book.author || "Unknown"}</p>
-      <p className="text-gray-700">ISBN: {book.isbn}</p>
-      <p className="text-gray-500">Rating: {generateStars(book.rating)}</p>
-      <p className="text-gray-500">
+      <p className="text-gray-700 dark:text-gray-200">Author: {book.author || "Unknown"}</p>
+      <p className="text-gray-700  dark:text-gray-200">ISBN: {book.isbn}</p>
+      <p className="text-gray-500  dark:text-gray-100">Rating: {generateStars(book.rating)}</p>
+      <p className="text-gray-500 dark:text-gray-100">
         Rented: {book.rented_num ? book.rented_num : 0} times
       </p>
-      <p className="text-gray-500">
+      <p className="text-gray-500 dark:text-gray-100">
         Created At: {new Date(book.created_at).toLocaleDateString()}
       </p>
-      <p className="font-bold text-gray-700">
+      <p className="font-bold text-gray-700 dark:text-gray-200">
         Rent price : USD {book.rent_price} / day
       </p>
 
@@ -46,10 +46,10 @@ export function BookItem({book} :{book:Book}):JSX.Element {
       )}
       <div className="grid grid-cols-2 mt-4 gap-4">
         <div className="justify-center flex">
-          <button className="w-full border-slate-950 border-2 border-solid rounded">edit</button>
+          <button className="w-full border-slate-950 dark:border-slate-800 border-2 border-solid rounded dark:bg-slate-800">edit</button>
         </div>
         <div className="justify-center flex">
-          <button className="w-full bg-slate-950 border-2 border-slate-950 border-solid  text-white p-2 rounded hover:opacity-75 focus:outline-slate-950" onClick={handleDelete}>
+          <button className="w-full bg-slate-950 border-2 border-slate-8000 dark:border-slate-800 border-solid  text-white p-2 rounded hover:opacity-75 focus:outline-slate-950" onClick={handleDelete}>
             delete
           </button>
         </div>

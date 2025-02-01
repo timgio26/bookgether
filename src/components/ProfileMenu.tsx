@@ -9,7 +9,7 @@ export function ProfileMenu() {
   return (
     <div className="dark:bg-slate-800 bg-slate-100 mx-5 rounded-sm mb-24 ">
 
-
+        
       <div className="flex flex-row justify-between items-center" onClick={()=>handleClick("/my-order/rent")}>
         <div className="flex flex-row py-3 px-3 items-center gap-5">
           <div className="dark:bg-slate-700 bg-slate-200 h-10 w-10 rounded-full justify-center flex items-center">
