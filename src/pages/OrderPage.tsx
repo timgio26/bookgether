@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router";
-import { useGetBookId } from "@/features/useBook";
+import { useGetBookId, useGetUnavailalbeDate } from "@/features/useBook";
 import { Book, CreateOrder, datePicker, Profile } from "@/utils/types";
 import { DatePicker } from "@/components/DatePicker";
 import { createOrder, getprofile } from "@/utils/api";
@@ -22,6 +22,12 @@ export function OrderPage() {
   const [shipping, setShipping] = useState<"Regular" | "Express">();
 
 
+  const {data:unavailableDate,error:errorUnavailableDate} = useGetUnavailalbeDate(id)
+
+  const unavailableDates = unavailableDate?.unavailableDates || []
+
+  // console.log(unavailableDates)
+
 
   useEffect(() => {
     if (dateObj.startdate && dateObj.enddate) {
@@ -40,7 +46,7 @@ export function OrderPage() {
     getProfileApi();
   }, []);
 
-  if (!id || error || !data) {
+  if (!id || error || !data ||errorUnavailableDate) {
     return <div>book not found</div>;
   }
 
@@ -80,12 +86,12 @@ export function OrderPage() {
 
       <div>
         <h1 className="text-lg font-medium">Start date:</h1>
-        <DatePicker startOrEnd={"startdate"} setDateObj={setDateObj} />
+        <DatePicker startOrEnd={"startdate"} setDateObj={setDateObj} unavailableDates={unavailableDates}/>
       </div>
 
       <div>
         <h1 className="text-lg font-medium">End date:</h1>
-        <DatePicker startOrEnd={"enddate"} setDateObj={setDateObj} />
+        <DatePicker startOrEnd={"enddate"} setDateObj={setDateObj} unavailableDates={unavailableDates}/>
       </div>
 
       <div>

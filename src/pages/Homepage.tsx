@@ -1,8 +1,14 @@
+import { useGetCountLendBook } from "@/features/useBook";
 import { FaMoon, FaBookOpen } from "react-icons/fa";
 
 export function Homepage() {
+
+  const  {data,error} =useGetCountLendBook()
+  console.log(data,error)
+
   return (
     <div className=" min-h-screen flex flex-col items-center px-5 mb-20">
+      
 
       <div className="h-svh flex items-center flex-col justify-center">
         <div className="text-center mb-12">

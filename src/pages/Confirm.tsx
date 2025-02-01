@@ -10,7 +10,7 @@ export function Confirm() {
       <h1 className="text-2xl font-semibold my-2">Order Submited</h1>
       <h1 className="font-mono font-light">please wait for book owner to confirm</h1>
       <Link to={"/my-order/rent"}>
-        <div className="bg-slate-800 my-10 py-2 rounded-full">My Order</div>
+        <div className="dark:bg-slate-800 bg-slate-200 shadow-md my-10 py-2 rounded-full">My Order</div>
       </Link>
       </div>
     </div>

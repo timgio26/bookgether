@@ -11,9 +11,10 @@ import { toast } from "@/hooks/use-toast"
 type DatePickperProp = {
   startOrEnd:'startdate'|'enddate';
   setDateObj: React.Dispatch<React.SetStateAction<datePicker>>;
+  unavailableDates : Date[]
 }
 
-export function DatePicker({startOrEnd,setDateObj}:DatePickperProp) {
+export function DatePicker({startOrEnd,setDateObj,unavailableDates}:DatePickperProp) {
   const [date, setDate] = useState<Date>()
   useEffect(() => {
     if (date && date < new Date())
@@ -47,6 +48,14 @@ export function DatePicker({startOrEnd,setDateObj}:DatePickperProp) {
           selected={date}
           onSelect={setDate}
           initialFocus
+          disabled={unavailableDates}
+          fromMonth={new Date()}
+          modifiers={{
+            booked: unavailableDates
+          }}
+          modifiersClassNames={{
+            booked: "my-booked-class"
+          }}
         />
       </PopoverContent>
     </Popover>

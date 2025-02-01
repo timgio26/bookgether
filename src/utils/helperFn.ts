@@ -54,3 +54,20 @@ export function distance(lat1:number, lon1:number, lat2:number, lon2:number, uni
 		return dist;
 	}
 }
+
+
+export function getDatesBetween(startDate: string, endDate: string): Date[] {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  const dates: Date[] = [];
+
+  const currentDate = start;
+  while (currentDate <= end) {
+    dates.push(new Date(currentDate));
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return dates;
+}
+
+

@@ -10,7 +10,7 @@ import {
 import { supabase } from "./supabase";
 import { toast } from "@/hooks/use-toast";
 import { AuthError } from "@supabase/supabase-js";
-import { getUserZ } from "./helperFn";
+import { getDatesBetween, getUserZ } from "./helperFn";
 
 export async function register({ email, password }: UserAuth) {
   const { data, error } = await supabase.auth.signUp({ email, password });
@@ -142,6 +142,18 @@ export async function getBookIsbn(isbn: string,title:string) {
   return { data, error };
 }
 
+export async function getBookUnavailableDate(id:string|number){
+  const { data, error } = await supabase
+    .from("db_book_order")
+    .select("start_date,end_date")
+    .eq("book_id",Number(id));
+
+
+  const unavailableDates= data?.map((each)=>getDatesBetween(each.start_date,each.end_date)).flat()
+
+  return { unavailableDates, error }
+}
+
 export async function delBook(id: string) {
   const { error } = await supabase.from("db_book").delete().eq("id", id);
   return error;
@@ -214,4 +226,11 @@ export async function getMyLendOrder() {
     return { data: null, error: new Error("Data validation error") };
   }
   return { data: result.data, error };
+}
+
+export async function getLendCount() {
+  const { count, error } = await supabase
+    .from("db_book_order")
+    .select("*", { count: "exact", head: true });
+  return { count, error };
 }

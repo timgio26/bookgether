@@ -1,4 +1,4 @@
-import {getBook,getBookid,getMyLendOrder,getMyRentOrder,getprofile} from "../utils/api"
+import {getBook,getBookid,getBookUnavailableDate,getLendCount,getMyLendOrder,getMyRentOrder,getprofile} from "../utils/api"
 import { useQuery } from "@tanstack/react-query";
 
 export function useGetBook(){
@@ -48,4 +48,20 @@ export function useGetLendBook(){
 
     })
     return {data,error}
+}
+
+export function useGetCountLendBook(){
+    const {data,error} = useQuery({
+        queryFn:getLendCount,
+        queryKey:['lendcount']
+    })
+    return {data,error}
+}
+
+export function useGetUnavailalbeDate(id:string|number){
+    const {data,error} = useQuery({
+        queryFn:()=>getBookUnavailableDate(id),
+        queryKey:['lendcount']
+    })
+    return {data,error} 
 }
