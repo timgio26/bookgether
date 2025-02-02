@@ -10,7 +10,7 @@ export function getUserZ(): string | null {
   const userString = localStorage.getItem("user");
 
   if (!userString) {
-    console.warn("No user found in localStorage.");
+    // console.warn("No user found in localStorage.");
     return null;
   }
 

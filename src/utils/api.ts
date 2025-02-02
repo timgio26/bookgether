@@ -63,7 +63,7 @@ export async function getprofile(): Promise<Profile> {
   if (!result.success) {
     throw new Error("Parsing failed");
   }
-
+  localStorage.setItem("profile",JSON.stringify(result.data[0]))
   return result.data[0];
 }
 
@@ -133,13 +133,15 @@ export async function getBookIsbn(isbn: string,title:string) {
     .from("db_book")
     .select("*,owner_id(*)")
     .or(`isbn.eq.${isbn},title.eq.${title}`)
+
+  const filtered_data = data?.filter((each)=>each.owner_id.user_id!==getUserZ())
   if (error)
     toast({
       title: "Uh oh! Something went wrong.",
       description: error.message,
       style: { color: "red" },
     });
-  return { data, error };
+  return { data:filtered_data, error };
 }
 
 export async function getBookUnavailableDate(id:string|number){

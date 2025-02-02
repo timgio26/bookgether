@@ -1,12 +1,12 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { UserAuth } from "../utils/types";
-import { signin } from "../utils/api";
+import {  signin,getprofile} from "../utils/api";
 import { useNavigate } from "react-router";
 import { useStore } from "@/store";
 
 
 export function Login() {
-  const {login:loginz} = useStore()
+  const {login:loginz,setprofile} = useStore()
 
   const [loginData, setLoginData] = useState<UserAuth>({
     email: "",
@@ -28,9 +28,11 @@ export function Login() {
     e.preventDefault();
     setIsLoading(true);
     const {error}=await signin(loginData);
-    console.log(error)
     setIsLoading(false);
     if(!error){
+
+      await getprofile()
+      setprofile()
       loginz()
       navigate('/')}
   }
