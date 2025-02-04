@@ -12,7 +12,7 @@ export function MapStatic({coordinate}:MapProp) {
     <div className="h-40 w-full mt-4 mb-4">
       <MapContainer
         className="h-full w-full z-0"
-        center={[51.505, -0.09]}
+        center={[Number(coordinate.lat), Number(coordinate.lng)]}
         zoom={13}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

@@ -236,3 +236,44 @@ export async function getLendCount() {
     .select("*", { count: "exact", head: true });
   return { count, error };
 }
+
+export async function cancelOrder(id:string|number) {
+  const { data, error } = await supabase
+    .from("db_book_order")
+    .update({ order_status: "canceled" })
+    .eq("id", id.toString())
+    .select();
+  if (error)
+    toast({
+      title: "Uh oh! Something went wrong.",
+      description: error.message,
+      style: { color: "red" },
+    });
+  return { data, error };
+}
+
+export async function processOrder(id:string|number,curStage:string) {
+
+  const stats = ["open","confirm","shipped","returned","close"]
+  const nextStage = stats[stats.indexOf(curStage)+1]
+
+  if (nextStage=='open') return {data:[],error:"wrong stats"}
+
+
+
+  const { data, error } = await supabase
+    .from("db_book_order")
+    .update({ order_status: nextStage })
+    .eq("id", id.toString())
+    .select();
+
+  if (error)
+    toast({
+      title: "Uh oh! Something went wrong.",
+      description: error.message,
+      style: { color: "red" },
+    });
+
+  return { data, error };
+}
+

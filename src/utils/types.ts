@@ -79,7 +79,9 @@ export type CreateOrder = {
   renter_id: string;
   start_date: string;
   end_date: string;
+  shipping_cost:number;
   total_cost: number;
+  order_status:"open"|"confirm"|"shipped"|"returned"|"close"|"canceled"
 };
 
 export const MyRentSchema = z.object({
@@ -94,6 +96,8 @@ export const MyRentSchema = z.object({
   start_date: z.string(),
   end_date: z.string(),
   total_cost: z.number(),
+  shipping_cost:z.number(),
+  order_status:z.string()
 });
 
 export const rentOrderArraySchema = z.array(MyRentSchema);
@@ -114,6 +118,8 @@ export const MyLendSchema = z.object({
   start_date: z.string(),
   end_date: z.string(),
   total_cost: z.number(),
+  shipping_cost:z.number(),
+  order_status:z.string(),
 });
 
 export const lendOrderArraySchema = z.array(MyLendSchema);

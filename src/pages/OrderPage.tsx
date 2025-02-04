@@ -1,33 +1,33 @@
-import { useNavigate, useParams } from "react-router";
-import { useGetBookId, useGetUnavailalbeDate } from "@/features/useBook";
-import { Book, CreateOrder, datePicker, Profile } from "@/utils/types";
+import { useNavigate } from "react-router";
+// import { useGetBookId, useGetUnavailalbeDate, useGetUserProfile } from "@/features/useBook";
+import { Book, CreateOrder } from "@/utils/types";
 import { DatePicker } from "@/components/DatePicker";
-import { createOrder, getprofile } from "@/utils/api";
-import { useEffect, useState } from "react";
+import { createOrder } from "@/utils/api";
+import { useEffect } from "react";
 import { FaTruckFast, FaTruck } from "react-icons/fa6";
 import { MapStatic } from "@/components/MapStatic";
 import { IoMdPin } from "react-icons/io";
+import { useCheckout } from "@/features/useCheckout";
 
 export function OrderPage() {
-  const navigate = useNavigate()
-  const { id = "" } = useParams();
-  const { data: respdata } = useGetBookId(id);
-  const { data, error } = respdata || {};
-  const [user, setUser] = useState<Profile>();
-  const [dateObj, setDateObj] = useState<datePicker>({
-    startdate: null,
-    enddate: null,
-  });
-  const [differenceInDays, setDifferenceInDays] = useState<number>(0);
-  const [shipping, setShipping] = useState<"Regular" | "Express">();
+  const navigate = useNavigate();
 
+  const {
+    id,
+    data,
+    error,
+    user,
+    dateObj,
+    setDateObj,
+    differenceInDays,
+    setDifferenceInDays,
+    shipping,
+    setShipping,
+    unavailableDate,
+    errorUnavailableDate,
+  } = useCheckout();
 
-  const {data:unavailableDate,error:errorUnavailableDate} = useGetUnavailalbeDate(id)
-
-  const unavailableDates = unavailableDate?.unavailableDates || []
-
-  // console.log(unavailableDates)
-
+  const unavailableDates = unavailableDate?.unavailableDates || [];
 
   useEffect(() => {
     if (dateObj.startdate && dateObj.enddate) {
@@ -36,48 +36,43 @@ export function OrderPage() {
         (1000 * 60 * 60 * 24);
       setDifferenceInDays(diffInDays);
     }
-  }, [dateObj]);
+  }, [dateObj, setDifferenceInDays]);
 
-  useEffect(() => {
-    async function getProfileApi() {
-      const data = await getprofile();
-      setUser(data);
-    }
-    getProfileApi();
-  }, []);
-
-  if (!id || error || !data ||errorUnavailableDate) {
+  if (!id || error || !data || errorUnavailableDate) {
     return <div>book not found</div>;
   }
 
   const bookdata = data[0] as Book;
 
-  function handlePin(){
-    navigate('/profile/edit')
+  function handlePin() {
+    navigate("/profile/edit");
   }
-  
-  async function handleCreateOrder(){
-    if(!user || !dateObj.startdate || !dateObj.enddate) return
 
-    const orderData : CreateOrder = {
-      book_id:id,
-      renter_id:user.user_id,
-      start_date:dateObj.startdate?.toDateString(),
-      end_date:dateObj.enddate?.toDateString(),
-      total_cost:differenceInDays || 0 * bookdata.rent_price
-    }
-    const {error} = await createOrder(orderData)
-    // console.log(data)
-    // console.log(error)
-    if(!error) navigate("/order/confirm/")
-    }
+  async function handleCreateOrder() {
+    if (!user || !dateObj.startdate || !dateObj.enddate) return;
 
+    const orderData: CreateOrder = {
+      book_id: id,
+      renter_id: user.user_id,
+      start_date: dateObj.startdate?.toDateString(),
+      end_date: dateObj.enddate?.toDateString(),
+      shipping_cost: shipping=="Regular"?2.5:5,
+      total_cost: (differenceInDays * bookdata.rent_price)+ (shipping ? (shipping === 'Regular' ? 2.5 : 5) : 0),
+      order_status:"open"
+    };
+
+    const { error } = await createOrder(orderData);
+
+    if (!error) navigate("/order/confirm/");
+  }
 
   return (
     <div className="flex flex-col gap-4 px-5 pb-16">
       <div>
         <h1 className="text-xl font-bold my-2">{bookdata.title}</h1>
-        <h1 className="text-md text-gray-500 dark:text-gray-300">{bookdata.author}</h1>
+        <h1 className="text-md text-gray-500 dark:text-gray-300">
+          {bookdata.author}
+        </h1>
         <h1 className="text-md text-gray-500  dark:text-gray-300">
           from:{" "}
           {typeof bookdata.owner_id === "object" && bookdata.owner_id.name}
@@ -86,12 +81,20 @@ export function OrderPage() {
 
       <div>
         <h1 className="text-lg font-medium">Start date:</h1>
-        <DatePicker startOrEnd={"startdate"} setDateObj={setDateObj} unavailableDates={unavailableDates}/>
+        <DatePicker
+          startOrEnd={"startdate"}
+          setDateObj={setDateObj}
+          unavailableDates={unavailableDates}
+        />
       </div>
 
       <div>
         <h1 className="text-lg font-medium">End date:</h1>
-        <DatePicker startOrEnd={"enddate"} setDateObj={setDateObj} unavailableDates={unavailableDates}/>
+        <DatePicker
+          startOrEnd={"enddate"}
+          setDateObj={setDateObj}
+          unavailableDates={unavailableDates}
+        />
       </div>
 
       <div>
@@ -105,7 +108,8 @@ export function OrderPage() {
           <div
             onClick={() => setShipping("Regular")}
             className={`flex flex-col justify-center items-center h-20 bg-slate-100 dark:bg-gray-900 rounded-sm ${
-              shipping == "Regular" && "border-slate-950 border-2 dark:border-slate-300"
+              shipping == "Regular" &&
+              "border-slate-950 border-2 dark:border-slate-300"
             } `}
           >
             <FaTruck />
@@ -114,7 +118,8 @@ export function OrderPage() {
           <div
             onClick={() => setShipping("Express")}
             className={`flex flex-col justify-center items-center h-20 bg-slate-100 dark:bg-gray-900 rounded-sm ${
-              shipping == "Express" && "border-slate-950 border-2 dark:border-slate-300"
+              shipping == "Express" &&
+              "border-slate-950 border-2 dark:border-slate-300"
             } `}
           >
             <FaTruckFast />
@@ -131,11 +136,13 @@ export function OrderPage() {
           />
         ) : (
           <div className=" flex justify-center mt-2">
-          <div className="bg-slate-950 flex flex-row justify-center items-center rounded-full px-5 py-1 dark:bg-gray-800" onClick={handlePin}>
-          
-            <IoMdPin color="white" />
-            <span className="text-white">add pin poin</span>
-          </div>
+            <div
+              className="bg-slate-950 flex flex-row justify-center items-center rounded-full px-5 py-1 dark:bg-gray-800"
+              onClick={handlePin}
+            >
+              <IoMdPin color="white" />
+              <span className="text-white">add pin poin</span>
+            </div>
           </div>
         )}
       </div>
@@ -151,13 +158,30 @@ export function OrderPage() {
             {differenceInDays * bookdata.rent_price} USD
           </h1>
         </div>
+
+        {shipping && (
+          <div className="flex flex-row justify-between">
+            <h1>{shipping} shipping</h1>
+            <h1 className="font-semibold">
+              {shipping == "Regular" ? 2.5 : 5} USD
+            </h1>
+          </div>
+        )}
+
+        <div className="flex flex-row justify-between border-t-2 mt-2">
+          <h1 className="font-bold">Total</h1>
+          <h1 className="font-bold">
+            {(differenceInDays * bookdata.rent_price)+ (shipping ? (shipping === 'Regular' ? 2.5 : 5) : 0)} USD
+          </h1>
+        </div>
       </div>
 
       <button
         className={`bg-slate-950 text-white p-2 rounded hover:opacity-75 focus:outline-slate-950 dark:bg-slate-900 ${
-          (differenceInDays || 0) <= 0 && "cursor-not-allowed opacity-50"
+          ((differenceInDays || 0) <= 0 || !shipping || !user?.address) &&
+          "cursor-not-allowed opacity-50"
         }`}
-        disabled={(differenceInDays || 0) <= 0}
+        disabled={(differenceInDays || 0) <= 0 || !shipping || !user?.address}
         onClick={handleCreateOrder}
       >
         Confirm
