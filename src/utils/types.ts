@@ -87,10 +87,13 @@ export type CreateOrder = {
 export const MyRentSchema = z.object({
   id: z.number(),
   book_id: z.object({
+    id:z.number(),
     title: z.string(),
     owner_id: z.object({
       name: z.string(),
     }),
+    rented_num:z.number().nullable()
+    // rented_num:z.number()
   }),
   renter_id: z.string(),
   start_date: z.string(),
@@ -107,8 +110,10 @@ export type MyRent = z.infer<typeof MyRentSchema>;
 export const MyLendSchema = z.object({
   id: z.number(),
   book_id: z.object({
+    id:z.number(),
     title: z.string(),
     owner_id: z.string(),
+    rented_num:z.number().nullable()
   }),
   renter_id: z.object({
     user_id:z.string(),

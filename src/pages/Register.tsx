@@ -28,9 +28,10 @@ export function Register() {
   return (
     <div className="px-2">
       <form
-        className="flex flex-col flex-grow justify-center"
+        className="flex flex-col flex-grow justify-center mt-48"
         onSubmit={handleSubmit}
       >
+        <h1 className="text-4xl font-bold my-10">BookGether</h1>
         <label
           htmlFor="email"
           className="mb-2 text-sm font-medium text-gray-700 dark:text-white"

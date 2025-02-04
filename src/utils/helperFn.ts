@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { getBookUnavailableDate, getNextOrder } from "./api";
 
 // Define the Zod schema for the User object
 const UserSchema = z.object({
@@ -68,6 +69,24 @@ export function getDatesBetween(startDate: string, endDate: string): Date[] {
   }
 
   return dates;
+}
+
+export async function findNextOrder(id:number|string,endDate:Date){
+  const {unavailableDates} = await getBookUnavailableDate(id)
+  const nextDate = new Date(endDate);
+  nextDate.setDate(endDate.getDate() + 1);
+
+  const nextCustomerDate = unavailableDates&&unavailableDates.filter(date => date.getTime() === nextDate.getTime())
+
+  if(nextCustomerDate?.length&&nextCustomerDate.length>0){
+    const nextDateStr = nextCustomerDate[0].toISOString().slice(0,10)
+    const {data,error} = await getNextOrder(id,nextDateStr)
+    console.log(data)
+    return {data,error}
+  }else{
+    return false
+  }
+
 }
 
 

@@ -11,6 +11,7 @@ import { supabase } from "./supabase";
 import { toast } from "@/hooks/use-toast";
 import { AuthError } from "@supabase/supabase-js";
 import { getDatesBetween, getUserZ } from "./helperFn";
+// import { number } from "zod";
 
 export async function register({ email, password }: UserAuth) {
   const { data, error } = await supabase.auth.signUp({ email, password });
@@ -148,12 +149,20 @@ export async function getBookUnavailableDate(id:string|number){
   const { data, error } = await supabase
     .from("db_book_order")
     .select("start_date,end_date")
-    .eq("book_id",Number(id));
-
-
+    .eq("book_id",Number(id))
+    .neq('order_status','canceled');
   const unavailableDates= data?.map((each)=>getDatesBetween(each.start_date,each.end_date)).flat()
-
   return { unavailableDates, error }
+}
+
+export async function getNextOrder(book_id:number|string, start_date:string){
+  const { data, error } = await supabase
+      .from("db_book_order")
+      .select("id,renter_id(lat,lng),book_id(owner_id(lat,lng))")
+      .eq("book_id",Number(book_id))
+      .eq("start_date",start_date)
+      .neq('order_status','canceled');
+    return {data,error}
 }
 
 export async function delBook(id: string) {
@@ -217,6 +226,7 @@ export async function getMyLendOrder() {
       style: { color: "red" },
     });
 
+    // console.log(data)
   const result = lendOrderArraySchema.safeParse(data);
 
   if (!result.success) {
@@ -233,9 +243,21 @@ export async function getMyLendOrder() {
 export async function getLendCount() {
   const { count, error } = await supabase
     .from("db_book_order")
-    .select("*", { count: "exact", head: true });
+    .select("*,book_id!inner(*)", { count: "exact", head: true })
+    .eq("book_id.owner_id", getUserZ())
+    .eq('order_status','close')
   return { count, error };
 }
+
+export async function getRentCount() {
+  const { count, error } = await supabase
+    .from("db_book_order")
+    .select("*,renter_id(*)", { count: "exact", head: true })
+    .eq("renter_id", getUserZ())
+    .eq('order_status','close')
+  return { count, error };
+}
+
 
 export async function cancelOrder(id:string|number) {
   const { data, error } = await supabase
@@ -252,20 +274,25 @@ export async function cancelOrder(id:string|number) {
   return { data, error };
 }
 
-export async function processOrder(id:string|number,curStage:string) {
+export async function processOrder(id:string|number,curStage:string,rented_num:number|null,book_id:number) {
 
   const stats = ["open","confirm","shipped","returned","close"]
   const nextStage = stats[stats.indexOf(curStage)+1]
 
   if (nextStage=='open') return {data:[],error:"wrong stats"}
 
-
-
   const { data, error } = await supabase
     .from("db_book_order")
     .update({ order_status: nextStage })
     .eq("id", id.toString())
     .select();
+
+  if (nextStage == "close") {
+    await supabase
+      .from("db_book")
+      .update({ rented_num: (rented_num||0)+1 })
+      .eq("id", book_id);
+  }
 
   if (error)
     toast({

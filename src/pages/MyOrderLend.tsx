@@ -5,7 +5,7 @@ export function MyOrderLend(){
     const {data} = useGetLendBook()
     // console.log(data)
     return(
-        <div>
+        <div className="mb-24">
             {data && data.data?.map((each)=><BookOrderTile data={each} key={each.id}/>)}
         </div>
     )
