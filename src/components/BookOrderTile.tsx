@@ -1,17 +1,50 @@
-import { MyLend, MyRent } from "@/utils/types";
+import { MyLend, MyRent, ProfileCoorSchema } from "@/utils/types";
 import { cancelOrder, processOrder } from "@/utils/api";
 import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { findNextOrder } from "@/utils/helperFn";
+import { useStore } from "@/store";
+import { toast } from "@/hooks/use-toast";
 
 type BookOrderTileProp = {
   data: MyRent | MyLend;
 };
 
 export function BookOrderTile({ data }: BookOrderTileProp) {
+  const [ecoDelivery,setEcoDelivery] = useState<boolean>()
+  const [ecoCo2,setEcoCo2] = useState<number>()
+  const [nextId,setNextId] = useState<number>()
   const [loading, setLoading] = useState<boolean>(false);
+  const {profile} = useStore()
   const queryClient = useQueryClient();
 
+  useEffect(()=>{
+    async function getEcoDeliv(){
+      if(data.order_status=="shipped" && profile){
+        // console.log(JSON.parse(profile))
+        const parseResult = ProfileCoorSchema.safeParse(JSON.parse(profile))
+    
+        if(!parseResult.success){ console.log('error parse profile coordinate')}
+    
+        if(!parseResult.data) return null
+    
+        const resp = await findNextOrder(data.book_id.id,new Date(data.end_date),parseResult.data.lat,parseResult.data.lng)
+        if (resp !== undefined) {
+          const { eco, nextId,shipCo2Reduction} = resp;
+          // console.log(eco, nextId);
+          if(eco) {
+            setEcoDelivery(true)
+            setNextId(nextId)
+            setEcoCo2(shipCo2Reduction)
+          }
+        } else {
+          console.log("resp is undefined");
+        }
+      }
+    }
+    getEcoDeliv()
+  },[data,profile])
+  
   async function handleCancel() {
     setLoading(true);
     const { error } = await cancelOrder(data.id);
@@ -27,7 +60,9 @@ export function BookOrderTile({ data }: BookOrderTileProp) {
 
   async function handleProcess() {
     setLoading(true);
+    
     const { error } = await processOrder(data.id, data.order_status,data.book_id.rented_num,data.book_id.id);
+    
     if (typeof data.renter_id == "string") {
       if (!error) queryClient.invalidateQueries({ queryKey: ["rentorder"] });
     } else {
@@ -36,11 +71,28 @@ export function BookOrderTile({ data }: BookOrderTileProp) {
     setLoading(false);
   }
 
-  if(data.order_status=="shipped"){
-    findNextOrder(data.book_id.id,new Date(data.end_date))
-  }
+  async function handleEcoDeliv(){
+    setLoading(true)
 
-  const ecoDelivery: boolean = false;
+    handleProcess()
+
+    if(!nextId)return
+    const { error } = await processOrder(nextId, 'confirm', null, data.book_id.id);
+
+    if (typeof data.renter_id == "string") {
+      if (!error) queryClient.invalidateQueries({ queryKey: ["rentorder"] });
+    } else {
+      if (!error) queryClient.invalidateQueries({ queryKey: ["lendorder"] });
+    }
+
+    toast({
+      title: `You just reduce another ${ecoCo2} kg CO2` ,
+      // description: error.message,
+      style: { color: "green" },
+    });
+
+    setLoading(false);
+  }
 
   return (
     <div
@@ -127,7 +179,7 @@ export function BookOrderTile({ data }: BookOrderTileProp) {
             </button>
           )}
 
-          {ecoDelivery && <button>Eco Delivery</button>}
+          {(ecoDelivery&&data.order_status=='shipped') && <button className="p-2 bg-green-400 dark:bg-green-700 rounded" onClick={handleEcoDeliv}>Eco Delivery</button>}
         </div>
       )}
     </div>

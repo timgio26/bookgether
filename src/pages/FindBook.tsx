@@ -5,6 +5,7 @@ import { Airesp } from "@/utils/types";
 import { BookTile } from "@/components/BookTile";
 import UseAnimations from "react-useanimations";
 import loading2 from "react-useanimations/lib/loading2";
+import { useTheme } from "./ThemeProvider";
 
 const testBook: Airesp = {
   content: [
@@ -31,9 +32,12 @@ const testBook: Airesp = {
 };
 
 export function FindBook() {
+  const { theme } = useTheme()
   const [loading, setLoading] = useState<boolean>(false);
   const [searchVal, setSearchVal] = useState<string>("");
   const [answer, setAnswer] = useState<null | Airesp>(testBook);
+
+  // console.log(theme)
 
   function handleSearchInput(e: ChangeEvent<HTMLInputElement>) {
     setSearchVal(e.target.value);
@@ -67,7 +71,7 @@ export function FindBook() {
       <div className="pb-24 grid-cols-1 justify-center">
         {loading ? (
           <div className="flex justify-center">
-            <UseAnimations animation={loading2} size={56}/>
+            <UseAnimations animation={loading2} size={56} fillColor={theme==='dark'?"white":''}/>
           </div>
         ) : (
           answer &&

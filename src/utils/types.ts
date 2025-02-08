@@ -130,3 +130,26 @@ export const MyLendSchema = z.object({
 export const lendOrderArraySchema = z.array(MyLendSchema);
 
 export type MyLend = z.infer<typeof MyLendSchema>;
+
+
+
+export const NextOrderSchema = z.object({
+  id: z.number(),
+  renter_id: z.object({
+    lat: z.string(),
+    lng: z.string(),
+  }),
+  book_id: z.object({
+    owner_id: z.object({
+      lat: z.string(),
+      lng: z.string(),
+    }),
+  }),
+});
+
+export type NextOrder = z.infer<typeof NextOrderSchema>;
+
+export const ProfileCoorSchema = z.object({
+  lat: z.string(),
+  lng: z.string(),
+})

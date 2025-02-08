@@ -158,10 +158,12 @@ export async function getBookUnavailableDate(id:string|number){
 export async function getNextOrder(book_id:number|string, start_date:string){
   const { data, error } = await supabase
       .from("db_book_order")
-      .select("id,renter_id(lat,lng),book_id(owner_id(lat,lng))")
+      .select("*,renter_id(lat,lng),book_id(owner_id(lat,lng))")
       .eq("book_id",Number(book_id))
       .eq("start_date",start_date)
-      .neq('order_status','canceled');
+      .neq('order_status','canceled')
+      .neq('order_status','open')
+      .neq('order_status','returned')
     return {data,error}
 }
 

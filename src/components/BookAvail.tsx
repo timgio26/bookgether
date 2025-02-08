@@ -35,7 +35,7 @@ export function BookAvail({ book }: { book: Book }) {
     navigate(`/order/${book.id}`);
   }
   return (
-    <div className="p-4 m-4 bg-white rounded-lg shadow-md dark:bg-slate-800">
+    <div className="p-4 m-4 bg-white border dark:border-none rounded-lg shadow-md dark:bg-slate-800">
       {book.img_url ? (
         <img
           src={book.img_url}

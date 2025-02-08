@@ -9,7 +9,7 @@ export function BookTile({ title, author, numberOfPages, isbn }: Aibook) {
   async function handleClick() {
     const { data } = await getBookIsbn(isbn,title);
     if (data?.length) {
-      navigate("available", { state: data });
+      navigate("available", { state: data});
     } else
       toast({
         title: "No Book Found",
@@ -18,7 +18,7 @@ export function BookTile({ title, author, numberOfPages, isbn }: Aibook) {
   }
   return (
     <div
-      className="flex flex-col p-4 my-4 mx-2 bg-white border rounded shadow-lg dark:bg-slate-900"
+      className="flex flex-col p-4 my-4 mx-2 bg-white border dark:border-none rounded shadow-lg dark:bg-slate-900"
       onClick={handleClick}
     >
       <h2 className="text-xl font-bold text-gray-800 dark:text-white">{title}</h2>
