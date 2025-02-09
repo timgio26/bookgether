@@ -6,6 +6,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 import { ThemeProvider } from './pages/ThemeProvider';
+import { NoMatch } from './pages/NoMatch';
 
 const queryClient = new QueryClient()
 
@@ -43,6 +44,7 @@ function App() {
             
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="*" element={<NoMatch/>}/>
 
           </Route>
         </Routes>

@@ -282,7 +282,6 @@ export async function getRentCount() {
   return { count, error };
 }
 
-
 export async function cancelOrder(id:string|number) {
   const { data, error } = await supabase
     .from("db_book_order")

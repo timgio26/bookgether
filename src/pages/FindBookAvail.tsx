@@ -21,7 +21,6 @@ export function FindBookAvail() {
       setBookList(data)
     }
     getBook();
-    console.log('getbook')
   }, [searchParams]);
 
   function handleValueChange(value: SortBy) {

@@ -25,7 +25,7 @@ export function FindBook() {
   const [searchVal, setSearchVal] = useState<string>("");
   const [answer, setAnswer] = useState<null | Airesp>(testBook);
 
-  console.log(theme)
+  // console.log(theme)
 
   function handleSearchInput(e: ChangeEvent<HTMLInputElement>) {
     setSearchVal(e.target.value);

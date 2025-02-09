@@ -1,10 +1,23 @@
-import { NavLink } from "react-router";
-import { Outlet } from "react-router";
+import { NavLink ,Outlet} from "react-router";
 import { useStore } from '../store'
 import { ModeToggle } from "@/components/ModeToggle";
+import { useEffect } from "react";
+import { logout as logoutApi } from "@/utils/api";
+
+
 export function Layout() {
 
-  const {user} =useStore()
+  const {user,logout} =useStore()
+
+  const checkToken = localStorage.getItem('sb-dzanjlfmchzdirukrrlt-auth-token')
+
+  useEffect(()=>{
+    if(!checkToken){
+      logout()
+      logoutApi() 
+    }
+  },[logout,checkToken])
+
 
   return (
     <div className="flex flex-col min-h-screen">
