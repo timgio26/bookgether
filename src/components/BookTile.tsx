@@ -9,7 +9,8 @@ export function BookTile({ title, author, numberOfPages, isbn }: Aibook) {
   async function handleClick() {
     const { data } = await getBookIsbn(isbn,title);
     if (data?.length) {
-      navigate("available", { state: data});
+      const searchParams = new URLSearchParams({isbn,title})
+      navigate(`available?${searchParams}`, { state: data});
     } else
       toast({
         title: "No Book Found",

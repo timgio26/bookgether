@@ -55,10 +55,10 @@ export function Homepage() {
               <FaRoute className="text-5xl" />
             </div>
           </div>
-          <p className="text-sm mt-4">send directly to next lender</p>
+          <p className="text-sm mt-4">send directly to next borrower</p>
           <div className="mt-4">
             <p className="text-2xl font-bold flex-row flex items-center gap-5 justify-center">
-              lender <FaArrowCircleRight /> lender{" "}
+            borrower <FaArrowCircleRight /> borrower{" "}
             </p>
             <p className="text-sm font-light mt-2 font-mono">
               timesaving, less carbon footprint
