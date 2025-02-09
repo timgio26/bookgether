@@ -1,5 +1,5 @@
 import { delBook } from "@/utils/api";
-import { Book } from "@/utils/types";
+import { BookZ } from "@/utils/types";
 import { useQueryClient } from "@tanstack/react-query";
 import { generateStars } from "@/utils/helperFn";
 
@@ -7,7 +7,7 @@ import { generateStars } from "@/utils/helperFn";
 
 
 // Book Item Component
-export function BookItem({book} :{book:Book}):JSX.Element {
+export function BookItem({book} :{book:BookZ}):JSX.Element {
 
   const queryClient = useQueryClient();
 

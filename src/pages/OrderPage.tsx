@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 // import { useGetBookId, useGetUnavailalbeDate, useGetUserProfile } from "@/features/useBook";
-import { Book, CreateOrder } from "@/utils/types";
+import { BookZ, CreateOrder } from "@/utils/types";
 import { DatePicker } from "@/components/DatePicker";
 import { createOrder } from "@/utils/api";
 import { useEffect } from "react";
@@ -42,7 +42,7 @@ export function OrderPage() {
     return <div>book not found</div>;
   }
 
-  const bookdata = data[0] as Book;
+  const bookdata = data[0] as BookZ;
 
   function handlePin() {
     navigate("/profile/edit");

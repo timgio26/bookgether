@@ -10,18 +10,6 @@ import { useTheme } from "./ThemeProvider";
 const testBook: Airesp = {
   content: [
     {
-      title: "Atomic Habits",
-      numberOfPages: 320,
-      author: "James Clear",
-      isbn: "9780735211292",
-    },
-    {
-      title: "The Power of Now",
-      numberOfPages: 236,
-      author: "Eckhart Tolle",
-      isbn: "9781577314806",
-    },
-    {
       title: "Mindset: The New Psychology of Success",
       numberOfPages: 276,
       author: "Carol S. Dweck",
@@ -37,7 +25,7 @@ export function FindBook() {
   const [searchVal, setSearchVal] = useState<string>("");
   const [answer, setAnswer] = useState<null | Airesp>(testBook);
 
-  // console.log(theme)
+  console.log(theme)
 
   function handleSearchInput(e: ChangeEvent<HTMLInputElement>) {
     setSearchVal(e.target.value);
@@ -71,7 +59,7 @@ export function FindBook() {
       <div className="pb-24 grid-cols-1 justify-center">
         {loading ? (
           <div className="flex justify-center">
-            <UseAnimations animation={loading2} size={56} fillColor={theme==='dark'?"white":''}/>
+            <UseAnimations animation={loading2} size={56} fillColor={theme==='dark'?"white":'#0f172a'}/>
           </div>
         ) : (
           answer &&

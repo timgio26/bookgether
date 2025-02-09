@@ -1,5 +1,5 @@
 import { toast } from "@/hooks/use-toast";
-import { getBookIsbn } from "@/utils/api";
+import { getBookIsbnCount } from "@/utils/api";
 import { Aibook } from "@/utils/types";
 import { useNavigate } from "react-router";
 
@@ -7,10 +7,13 @@ export function BookTile({ title, author, numberOfPages, isbn }: Aibook) {
   const navigate = useNavigate();
 
   async function handleClick() {
-    const { data } = await getBookIsbn(isbn,title);
-    if (data?.length) {
+    const {count} = await getBookIsbnCount(isbn,title)
+    // const { data } = await getBookIsbn(isbn,title);
+    console.log(count)
+    // console.log(data?.length)
+    if (count) {
       const searchParams = new URLSearchParams({isbn,title})
-      navigate(`available?${searchParams}`, { state: data});
+      navigate(`available?${searchParams}`);
     } else
       toast({
         title: "No Book Found",

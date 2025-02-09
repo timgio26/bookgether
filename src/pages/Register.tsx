@@ -1,8 +1,11 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { UserAuth } from "../utils/types";
 import { register } from "../utils/api";
+import { toast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router";
 
 export function Register() {
+  const navigate = useNavigate()
   const [registData, setRegistData] = useState<UserAuth>({
     email: "",
     password: "",
@@ -21,8 +24,25 @@ export function Register() {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsLoading(true)
-    await register(registData)
-    setIsLoading(false)
+    const {error} = await register(registData)
+    if(error){
+      toast({
+        title: "Uh oh! Something went wrong.",
+        description: error.message,
+        style: { color: "red" },
+      });
+      setIsLoading(false)
+      return
+    }else{
+      toast({
+        title: "New User Created",
+        description: "please login with your email and password",
+        // style: { color: "red" },
+      });     
+      setIsLoading(false)
+    }
+    
+    navigate('/login')
   }
 
   return (

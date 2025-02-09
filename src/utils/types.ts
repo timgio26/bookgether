@@ -44,19 +44,44 @@ export type Addbook = {
 // };
 export type Profile = z.infer<typeof ProfileSchema>;
 
-export type Book = {
-  id: number;
-  title: string;
-  author: string;
-  img_url: string | null;
-  isbn: string;
-  rating: number | null;
-  rented_num: number | null;
-  created_at: string;
-  owner_id: string | Profile;
-  condition?: string | null;
-  rent_price: number;
-};
+export const BookSchema = z.object({
+  id:z.number(),
+  title:z.string(),
+  author:z.string(),
+  img_url:z.string().nullable(),
+  isbn:z.string(),
+  rating:z.number().nullable(),
+  rented_num:z.number().nullable(),
+  rent_price:z.number(),
+  created_at:z.string(),
+  owner_id:z.object({
+    name:z.string(),
+    lat:z.string(),
+    lng:z.string()
+  })
+});
+
+export const BookListSchema = z.array(BookSchema)
+
+export type BookList = z.infer<typeof BookListSchema>;
+
+export type BookZ = z.infer<typeof BookSchema>;
+
+
+
+// export type Book = {
+//   id: number;
+//   title: string;
+//   author: string;
+//   img_url: string | null;
+//   isbn: string;
+//   rating: number | null;
+//   rented_num: number | null;
+//   // created_at: string;
+//   owner_id: string | Profile;
+//   condition?: string | null;
+//   rent_price: number;
+// };
 
 export type Aibook = {
   title: string;

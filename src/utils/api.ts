@@ -6,6 +6,7 @@ import {
   CreateOrder,
   rentOrderArraySchema,
   lendOrderArraySchema,
+  BookListSchema,
 } from "./types";
 import { supabase } from "./supabase";
 import { toast } from "@/hooks/use-toast";
@@ -136,13 +137,34 @@ export async function getBookIsbn(isbn: string,title:string) {
     .or(`isbn.eq.${isbn},title.eq.${title}`)
 
   const filtered_data = data?.filter((each)=>each.owner_id.user_id!==getUserZ())
+
+  const result = BookListSchema.safeParse(filtered_data)
+  // console.log(result.success)
+
+  if (error || !result.success)
+    toast({
+      title: "Uh oh! Something went wrong.",
+      description: error?error.message:result.error?.toString(),
+      style: { color: "red" },
+    });
+
+  return { data:result.data, error };
+}
+
+export async function getBookIsbnCount(isbn: string,title:string) {
+  const {count,error} = await supabase
+    .from("db_book")
+    .select("isbn,owner_id",{head:true,count:"exact"})
+    .or(`isbn.eq.${isbn},title.eq.${title}`)
+    .neq('owner_id',getUserZ())
+
   if (error)
     toast({
       title: "Uh oh! Something went wrong.",
       description: error.message,
       style: { color: "red" },
     });
-  return { data:filtered_data, error };
+  return {count};
 }
 
 export async function getBookUnavailableDate(id:string|number){

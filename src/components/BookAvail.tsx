@@ -1,9 +1,13 @@
 import { useStore } from "@/store";
 import { distance, generateStars } from "@/utils/helperFn";
-import { Book, Profile } from "@/utils/types";
+import { BookZ, Profile } from "@/utils/types";
 import { useNavigate } from "react-router";
 
-export function BookAvail({ book }: { book: Book }) {
+type BookAvailProp = {
+  book:BookZ;
+}
+
+export function BookAvail({ book }:BookAvailProp) {
   const navigate = useNavigate();
   const { profile } = useStore();
   
