@@ -69,19 +69,15 @@ export type BookZ = z.infer<typeof BookSchema>;
 
 
 
-// export type Book = {
-//   id: number;
-//   title: string;
-//   author: string;
-//   img_url: string | null;
-//   isbn: string;
-//   rating: number | null;
-//   rented_num: number | null;
-//   // created_at: string;
-//   owner_id: string | Profile;
-//   condition?: string | null;
-//   rent_price: number;
-// };
+export const BookUpdateSchema = z.object({
+  author: z.string(),
+  img_url: z.string().nullable(),
+  isbn: z.string().nullable(),
+  rent_price: z.number(),
+}); 
+
+export type BookUpdate = z.infer<typeof BookUpdateSchema>;
+
 
 export type Aibook = {
   title: string;

@@ -4,6 +4,7 @@ export {Layout} from './Layout'
 export {ProtectedPage} from "./ProtectedPage"
 
 export {AddBook} from './AddBook'
+export {EditBook} from './EditBook'
 export {FindBook} from './FindBook' 
 export {FindBookAvail} from './FindBookAvail' 
 export {OrderPage} from './OrderPage'

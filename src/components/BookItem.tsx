@@ -2,18 +2,21 @@ import { delBook } from "@/utils/api";
 import { BookZ } from "@/utils/types";
 import { useQueryClient } from "@tanstack/react-query";
 import { generateStars } from "@/utils/helperFn";
+import { useNavigate } from "react-router";
 
 
-
-
-// Book Item Component
 export function BookItem({book} :{book:BookZ}):JSX.Element {
-
+  const navigate = useNavigate()
   const queryClient = useQueryClient();
 
   async function handleDelete(){
     const error = await delBook(book.id.toString())
     if(!error) queryClient.invalidateQueries({queryKey:["book"]})
+  }
+
+  function handleEdit(){
+    const searchParams = new URLSearchParams({bookid:book.id.toString()})
+    navigate(`/editbook?${searchParams}`)
   }
 
   return (
@@ -35,7 +38,7 @@ export function BookItem({book} :{book:BookZ}):JSX.Element {
       {/* Placeholder for missing image */}
       {book.img_url ? (
         <img
-          src={book.img_url}
+          src={"https://dzanjlfmchzdirukrrlt.supabase.co/storage/v1/object/public/"+book.img_url}
           alt={book.title}
           className="mt-4 w-full h-48 object-cover rounded"
         />
@@ -46,7 +49,8 @@ export function BookItem({book} :{book:BookZ}):JSX.Element {
       )}
       <div className="grid grid-cols-2 mt-4 gap-4">
         <div className="justify-center flex">
-          <button className="w-full border-slate-950 dark:border-slate-800 border-2 border-solid rounded dark:bg-slate-800">edit</button>
+          <button className="w-full border-slate-950 dark:border-slate-800 border-2 border-solid rounded dark:bg-slate-800"
+          onClick={handleEdit}>edit</button>
         </div>
         <div className="justify-center flex">
           <button className="w-full bg-slate-950 border-2 border-slate-8000 dark:border-slate-800 border-solid  text-white p-2 rounded hover:opacity-75 focus:outline-slate-950" onClick={handleDelete}>

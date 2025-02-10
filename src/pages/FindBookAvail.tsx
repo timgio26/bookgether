@@ -39,8 +39,6 @@ export function FindBookAvail() {
     }
   });
 
-  console.log(sortedList)
-
   return (
     <div className="flex flex-col mb-10">
       <div className="mx-4 mt-4">

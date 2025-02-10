@@ -1,16 +1,23 @@
 import { Map } from "@/components/Map";
-import { useGetUserProfile } from "@/features/useBook";
-import { updateProfile } from "@/utils/api";
+// import { useGetUserProfile } from "@/features/useBook";
+import { getprofile, updateProfile } from "@/utils/api";
 import { Profile, Coordinate } from "@/utils/types";
-import { ChangeEvent, useState,FormEvent } from "react";
+import { ChangeEvent, useState,FormEvent, useEffect } from "react";
 import { useNavigate } from "react-router";
 
 export function ProfileEdit() {
   const navigate = useNavigate()
-  const { data, error } = useGetUserProfile();
-  const [formdata, setFormdata] = useState<Profile | undefined>(data);
+  // const { data, error } = useGetUserProfile();
+  const [formdata, setFormdata] = useState<Profile | undefined>();
 
-  // console.log(formdata);
+  useEffect(()=>{
+    async function getUserProfile(){
+      const resp = await getprofile()
+      setFormdata(resp)
+    }
+    getUserProfile()
+  },[])
+
   function handleName(e: ChangeEvent<HTMLInputElement>) {
     setFormdata((state) =>
       state ? { ...state, name: e.target.value } : undefined
@@ -34,12 +41,12 @@ export function ProfileEdit() {
     if(!error) navigate(-1)
   }
 
-  if (error)
-    return (
-      <div className="flex my-9 mx-5 justify-center">
-        Error, Please try again later
-      </div>
-    );
+  // if (error)
+  //   return (
+  //     <div className="flex my-9 mx-5 justify-center">
+  //       Error, Please try again later
+  //     </div>
+  //   );
 
   return (
     <div className="pb-20 flex flex-col px-5">

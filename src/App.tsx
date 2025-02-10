@@ -1,6 +1,7 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router";
-import { Homepage, Layout,Register,Login,Profile,AddBook,FindBook,FindBookAvail, OrderPage,ProfileEdit, ProtectedPage,Confirm,MyOrderLend,MyOrderRent, MyOrderLayout} from './pages';
+import { Homepage, Layout,Register,Login,Profile,AddBook,FindBook,FindBookAvail,
+  OrderPage,ProfileEdit, ProtectedPage,Confirm,MyOrderLend,MyOrderRent, MyOrderLayout,EditBook} from './pages';
 import {
   QueryClient,
   QueryClientProvider,
@@ -28,6 +29,7 @@ function App() {
             </Route>
 
             <Route path="addbook" element={<ProtectedPage><AddBook /></ProtectedPage>} />
+            <Route path="editbook" element={<ProtectedPage><EditBook /></ProtectedPage>} />
 
             <Route path="profile">
               <Route index element={<ProtectedPage><Profile /></ProtectedPage>} />

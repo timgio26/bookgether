@@ -42,7 +42,7 @@ export function BookAvail({ book }:BookAvailProp) {
     <div className="p-4 m-4 bg-white border dark:border-none rounded-lg shadow-md dark:bg-slate-800">
       {book.img_url ? (
         <img
-          src={book.img_url}
+          src={"https://dzanjlfmchzdirukrrlt.supabase.co/storage/v1/object/public/"+book.img_url}
           // alt={book.title}
           className="mt-4 w-full h-48 object-cover rounded"
         />

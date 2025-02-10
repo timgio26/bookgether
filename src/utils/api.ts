@@ -7,12 +7,13 @@ import {
   rentOrderArraySchema,
   lendOrderArraySchema,
   BookListSchema,
+  BookSchema,
+  BookUpdate,
 } from "./types";
 import { supabase } from "./supabase";
 import { toast } from "@/hooks/use-toast";
 import { AuthError } from "@supabase/supabase-js";
 import { getDatesBetween, getUserZ } from "./helperFn";
-// import { number } from "zod";
 
 export async function register({ email, password }: UserAuth) {
   const { data, error } = await supabase.auth.signUp({ email, password });
@@ -60,7 +61,7 @@ export async function getprofile(): Promise<Profile> {
   const response = await supabase
     .from("db_profile")
     .select("*")
-    .eq("user_id", local_id);
+    .eq("user_id", local_id)
   const result = ProfileSchema.array().safeParse(response.data);
   if (!result.success) {
     throw new Error("Parsing failed");
@@ -120,15 +121,36 @@ export async function getBookid(id: string) {
   const { data, error } = await supabase
     .from("db_book")
     .select("*,owner_id(*)")
-    .eq("id", id);
+    .eq("id", id)
+    .single()
+  const parseResult = BookSchema.safeParse(data)
+  const parseResultData = parseResult.data
   if (error)
     toast({
       title: "Uh oh! Something went wrong.",
       description: error.message,
       style: { color: "red" },
     });
-  return { data, error };
+  return { data:parseResultData, error };
 }
+
+export async function updateBookId(id:string,updateData:BookUpdate){
+  const { data, error } = await supabase
+  .from("db_book")
+  .update(updateData)
+  .eq("id", id)
+
+  if (error)
+    toast({
+      title: "Uh oh! Something went wrong.",
+      description: error.message,
+      style: { color: "red" },
+    });
+
+  return { data };
+}
+
+
 
 export async function getBookIsbn(isbn: string,title:string) {
   const { data, error } = await supabase
@@ -327,3 +349,13 @@ export async function processOrder(id:string|number,curStage:string,rented_num:n
   return { data, error };
 }
 
+
+export async function uploadImg(file: File) {
+  const fileName = new Date().toString().replace(/ /g,"").replace(/:/g,"").slice(0,18) + Math.round(Math.random()*1000)
+  // console.log(fileName)
+  const { data, error } = await supabase.storage
+    .from("image")
+    .upload(`public/${fileName}`,file);
+
+  return { data, error };
+}
