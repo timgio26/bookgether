@@ -1,5 +1,10 @@
 # BookGether
 Bringing readers and books together in a sustainable way
+key feature:
+* AI book recommedation
+* Smart Routing
+* Dark Mode
+* Mobile First
 
 ## Home Page
 ![image](https://github.com/user-attachments/assets/b57028de-fc38-40ee-836b-553a9b021b95)
