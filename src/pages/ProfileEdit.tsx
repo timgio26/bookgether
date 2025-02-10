@@ -4,6 +4,7 @@ import { getprofile, updateProfile } from "@/utils/api";
 import { Profile, Coordinate } from "@/utils/types";
 import { ChangeEvent, useState,FormEvent, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { IoIosCamera } from "react-icons/io";
 
 export function ProfileEdit() {
   const navigate = useNavigate()
@@ -41,18 +42,18 @@ export function ProfileEdit() {
     if(!error) navigate(-1)
   }
 
-  // if (error)
-  //   return (
-  //     <div className="flex my-9 mx-5 justify-center">
-  //       Error, Please try again later
-  //     </div>
-  //   );
+  console.log(formdata?.lat)
 
   return (
     <div className="pb-20 flex flex-col px-5">
       <form action="" onSubmit={handleFormSubmit}>
         <div className="flex justify-center my-9">
+          <div className="relative">
+
           <div className="w-48 h-48 bg-slate-200 rounded-full"></div>
+          <label htmlFor="profImg" className="bg-slate-50 dark:bg-slate-700 border-2 border-slate-700 absolute bottom-3 right-3 rounded-full p-1"><IoIosCamera size={30}/></label>
+          <input type="file" name="profImg" id="profImg" hidden/>
+          </div>
         </div>
         <div className="flex flex-col space-y-2">
           <label htmlFor="name" className="text-gray-700 dark:text-gray-300">

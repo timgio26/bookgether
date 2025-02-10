@@ -28,12 +28,7 @@ export function Profile() {
   }
   // const error=true
 
-  if (error)
-    return (
-      <div className="flex flex-col text-center gap-3 flex-grow">
-        <h1>Page cant be loaded, please try again later</h1>
-      </div>
-    );
+  if (error) navigate('/')
   return (
     <div className="flex flex-col text-center gap-3 flex-grow">
       <div className="flex justify-center">

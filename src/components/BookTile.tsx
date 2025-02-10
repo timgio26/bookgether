@@ -8,9 +8,6 @@ export function BookTile({ title, author, numberOfPages, isbn }: Aibook) {
 
   async function handleClick() {
     const {count} = await getBookIsbnCount(isbn,title)
-    // const { data } = await getBookIsbn(isbn,title);
-    console.log(count)
-    // console.log(data?.length)
     if (count) {
       const searchParams = new URLSearchParams({isbn,title})
       navigate(`available?${searchParams}`);
@@ -20,6 +17,7 @@ export function BookTile({ title, author, numberOfPages, isbn }: Aibook) {
         description: "No users have this book available.",
       });
   }
+  
   return (
     <div
       className="flex flex-col p-4 my-4 mx-2 bg-white border dark:border-none rounded shadow-lg dark:bg-slate-900"

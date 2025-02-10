@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { findNextOrder } from "@/utils/helperFn";
 import { useStore } from "@/store";
 import { toast } from "@/hooks/use-toast";
+import { Rating } from "./Rating";
 
 type BookOrderTileProp = {
   data: MyRent | MyLend;
@@ -14,6 +15,7 @@ export function BookOrderTile({ data }: BookOrderTileProp) {
   const [ecoDelivery,setEcoDelivery] = useState<boolean>()
   const [ecoCo2,setEcoCo2] = useState<number>()
   const [nextId,setNextId] = useState<number>()
+  const [rating,setRating] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(false);
   const {profile} = useStore()
   const queryClient = useQueryClient();
@@ -165,9 +167,10 @@ export function BookOrderTile({ data }: BookOrderTileProp) {
             </button>
           )}
           {data.order_status == "close" && (
-            <button 
-            className="border-slate-950 dark:border-slate-700 border-2 border-solid rounded dark:bg-slate-800 p-2"
-            >Review</button>
+            // <button 
+            // className="border-slate-950 dark:border-slate-700 border-2 border-solid rounded dark:bg-slate-800 p-2"
+            // >Review</button>
+            <Rating n={5} size={32} selected={rating} setSelected={setRating}/>
           )}
           {data.order_status == "shipped" && (
             // <button>review</button>

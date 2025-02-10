@@ -135,7 +135,7 @@ export async function getBookid(id: string) {
 }
 
 export async function updateBookId(id:string,updateData:BookUpdate){
-  const { data, error } = await supabase
+  const { error } = await supabase
   .from("db_book")
   .update(updateData)
   .eq("id", id)
@@ -146,11 +146,9 @@ export async function updateBookId(id:string,updateData:BookUpdate){
       description: error.message,
       style: { color: "red" },
     });
-
-  return { data };
+  // console.log(data)
+  return { error };
 }
-
-
 
 export async function getBookIsbn(isbn: string,title:string) {
   const { data, error } = await supabase
@@ -348,7 +346,6 @@ export async function processOrder(id:string|number,curStage:string,rented_num:n
 
   return { data, error };
 }
-
 
 export async function uploadImg(file: File) {
   const fileName = new Date().toString().replace(/ /g,"").replace(/:/g,"").slice(0,18) + Math.round(Math.random()*1000)
