@@ -1,5 +1,5 @@
 import { logout } from "@/utils/api";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useStore } from "@/store";
 import { useGetUserProfile } from "@/features/useBook";
 import { ProfileMenu } from "@/components/ProfileMenu";
@@ -28,7 +28,16 @@ export function Profile() {
   }
   // const error=true
 
-  if (error) navigate('/')
+  if (error)
+    return (
+      <div className="flex flex-col text-center gap-3 my-7 mx-5">
+        <h1>Page cant be loaded, please try again later</h1>
+        <div className="mt-4">
+        <Link to={'/'} className="border-slate-800 border-2 py-2 px-5 rounded-full dark:bg-slate-800">back to home</Link>
+
+        </div>
+      </div>
+    );
   return (
     <div className="flex flex-col text-center gap-3 flex-grow">
       <div className="flex justify-center">

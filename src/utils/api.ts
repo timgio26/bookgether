@@ -197,6 +197,15 @@ export async function getBookUnavailableDate(id:string|number){
   return { unavailableDates, error }
 }
 
+export async function getIsBookWithOwner(book_id: number | string) {
+  const { count, error } = await supabase
+    .from("db_book_order")
+    .select("*", { count: "exact", head: true })
+    .eq("book_id", Number(book_id))
+    .eq("order_status", "shipped");
+  return { count, error };
+}
+
 export async function getNextOrder(book_id:number|string, start_date:string){
   const { data, error } = await supabase
       .from("db_book_order")

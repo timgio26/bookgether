@@ -1,5 +1,5 @@
 import { MyLend, MyRent, ProfileCoorSchema } from "@/utils/types";
-import { cancelOrder, processOrder } from "@/utils/api";
+import { cancelOrder, getIsBookWithOwner, processOrder } from "@/utils/api";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { findNextOrder } from "@/utils/helperFn";
@@ -17,6 +17,7 @@ export function BookOrderTile({ data }: BookOrderTileProp) {
   const [nextId,setNextId] = useState<number>()
   const [rating,setRating] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(false);
+  const [bookInOtherUser,setBookInOtherUser] = useState<boolean>(true);
   const {profile} = useStore()
   const queryClient = useQueryClient();
 
@@ -44,7 +45,16 @@ export function BookOrderTile({ data }: BookOrderTileProp) {
         }
       }
     }
+    async function cekBookLocation(){
+      // console.log("cekBookLocation")
+      if(data.order_status!=="confirm")return
+      // console.log("cekBookLocation2")
+      const {count} = await getIsBookWithOwner(data.book_id.id)
+      // console.log(count)
+      if(!count) setBookInOtherUser(false)
+    }
     getEcoDeliv()
+    cekBookLocation()
   },[data,profile])
   
   async function handleCancel() {
@@ -129,14 +139,14 @@ export function BookOrderTile({ data }: BookOrderTileProp) {
           <div className="grid grid-cols-2 gap-3 mt-4">
             {data.order_status == "open" && (
               <button
-                className="border-slate-950 dark:border-slate-700 border-2 border-solid rounded dark:bg-slate-800"
+                className="border-slate-950 dark:border-slate-700 border-2 border-solid rounded dark:bg-slate-800 p-2"
                 onClick={handleCancel}
                 disabled={loading}
               >
                 Cancel
               </button>
             )}
-            {data.order_status != "shipped" ? (
+            {((data.order_status != "shipped") && !(data.order_status=='confirm' && bookInOtherUser)) ? (
               <button
                 className="bg-slate-950 border-2 border-slate-8000 dark:border-slate-950 border-solid text-white p-2 rounded hover:opacity-75 focus:outline-slate-950"
                 disabled={loading}
@@ -150,7 +160,7 @@ export function BookOrderTile({ data }: BookOrderTileProp) {
               </button>
             ) : (
               <span className="text-xs opacity-75">
-                waiting for customer return
+                waiting for customer/other to return
               </span>
             )}
           </div>

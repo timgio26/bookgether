@@ -102,9 +102,9 @@ export async function findNextOrder(
     const nextDateStr = nextCustomerDate[0].toISOString().slice(0, 10);
     const { data: resp } = await getNextOrder(id, nextDateStr);
 
-    if (!resp) return;
+    if (!resp || !resp.length) return;
 
-    console.log(resp[0]);
+    // console.log(resp);
     const parseResult = NextOrderSchema.safeParse(resp[0]);
 
     if (!parseResult.success) {
